@@ -2,6 +2,8 @@
 
 ## <span style="color:red">Site in progress</span>
 
+Build Magic: the Gathering decks on this kick ass website
+
 ## Wireframe
 https://www.figma.com/file/VmG8CukGLlKOtIX3V2z59X/Ultimate-Tutor?node-id=0%3A1
 
@@ -14,6 +16,7 @@ https://www.figma.com/file/VmG8CukGLlKOtIX3V2z59X/Ultimate-Tutor?node-id=0%3A1
 - make new user
 - login/logout
 - option to stay logged in indefinitely
+- export deck to cockatrice to play virtually 
 - make a new deck (name deck, choose play format)
 - add cards to my deck (in deck or side board)
 - save version of deck and then track wins/losses
