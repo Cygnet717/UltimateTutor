@@ -5,8 +5,6 @@
 ## Wireframe
 https://www.figma.com/file/VmG8CukGLlKOtIX3V2z59X/Ultimate-Tutor?node-id=0%3A1
 
-# some *blue* text
-
 ## API
 [Skryfall](https://scryfall.com/docs/api)
 
@@ -21,12 +19,12 @@ https://www.figma.com/file/VmG8CukGLlKOtIX3V2z59X/Ultimate-Tutor?node-id=0%3A1
 - save version of deck and then track wins/losses
     (add cards, when done save version,no more deck editing, then win/loss tracking available)
     (to make a new version, copy deck data [userid, deckCards, sideBoard, format, commander and versionToBe = version++])
-
+---
 - add another user to your friends by username
 - approve people requesting to be your friend
 - view friends decks
-- comment on friends decks
-
+- comment on friends decks\s\s
+---
 - user settings page
 - change username
 - change password
@@ -36,27 +34,27 @@ https://www.figma.com/file/VmG8CukGLlKOtIX3V2z59X/Ultimate-Tutor?node-id=0%3A1
 
 ## Models
 
-User
-  _id
-  username
-  email
-  password
-  decks [deck id,]
-  pendingFriends [userid, ]
-  friends [userid, ]
++ User
+  - _id
+  - username
+  - email
+  - password
+  - decks [deck id,]
+  - pendingFriends [userid, ]
+  - friends [userid, ]
 
-Decks
-  _id
-  userId
-  toBeVersion //holds next version number until deck is saved
-  version 
-  deckCards [{ name, image, cardType, creatureType},]
-  sideBoard [{ name, image, cardType, creatureType},]
-  wins  //if there is a version number
-  losses  //if there is a version number
-  format
-  commander 
-  comments [{comment, userId},]
++ Decks
+  - _id
+  - userId
+  - toBeVersion //holds next version number until deck is saved
+  - version 
+  - deckCards [{ name, image, cardType, creatureType},]
+  - sideBoard [{ name, image, cardType, creatureType},]
+  - wins  //if there is a version number
+  - losses  //if there is a version number
+  - format
+  - commander 
+  - comments [{comment, userId},]
 
 
 ## Future Plans
