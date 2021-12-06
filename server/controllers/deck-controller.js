@@ -1,11 +1,12 @@
-const { Deck } = require('../models');
+const { Deck, User } = require('../models');
 
 
 module.exports = {
   async getUserDecks(req, res) {
-    const foundDecks = await User.findOne({});
-
-    
+    const foundDecks = await User.findOne(
+      {_id: req.body.user_id}
+    )
+      .populate('decks');
 
     res.json(foundDecks);
   },
@@ -15,11 +16,35 @@ module.exports = {
   },
 
   async createDeck(req, res) {
-    res.json({message: 'new deck'})
+    const newDeck = await Deck.create(req.body)
+ 
+    const userOfDeck = await User.findOneAndUpdate(
+      {_id: req.body.user_id},
+      {$push: {decks: newDeck._id}},
+      {new: true}
+      )
+
+    res.json(userOfDeck)
   },
 
   async updateDeck(req, res) {
-    res.json('update deck')
+    let updatedDeck;
+    if(req.body.sideboard){
+      updatedDeck = await Deck.findOneAndUpdate(
+        {_id: req.body.deck_id},
+        {$push: {sideBoard: req}},
+        {new: true}
+      )
+    } else {
+      updatedDeck = await Deck.findOneAndUpdate(
+        {_id: req.body.deck_id},
+        {$push: {deckCards: req}},
+        {new: true}
+      )
+    }
+    
+
+    res.json(updatedDeck)
   },
 
   async saveDeckVersion(req, res) {

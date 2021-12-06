@@ -18,7 +18,12 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    decks: Array,
+    decks: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Deck"
+      }
+    ],
     pendingFriends: Array,
     friends: Array,
     dateJoined: { 
