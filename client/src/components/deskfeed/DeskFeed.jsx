@@ -1,5 +1,5 @@
 import React from 'react';
-import './DeskFeed.css'
+import './DeskFeed.css';
 
 export default function DeskFeed() {
     return (
