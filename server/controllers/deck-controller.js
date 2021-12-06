@@ -1,4 +1,4 @@
-const { Deck } = require('../models');
+const { Deck, User } = require('../models');
 
 
 module.exports = {
@@ -15,7 +15,15 @@ module.exports = {
   },
 
   async createDeck(req, res) {
-    res.json({message: 'new deck'})
+    const newDeck = Deck.create(req.body, {new: true})
+
+    const userOfDeck = User.findOneAndUpdate(
+      {_id: req.body.user_id},
+      {$push: {decks: newDeck._id}},
+      {new: true} 
+      )
+
+    res.json(newDeck)
   },
 
   async updateDeck(req, res) {
