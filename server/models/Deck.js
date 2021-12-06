@@ -21,14 +21,12 @@ const deckschema = new Schema(
       cardName: String,
       image: String,
       cardType: String,
-      creatureType: String,
       commander: Boolean
     }],
     sideBoard: [{
       cardName: String,
       image: String,
-      cardType: String,
-      creatureType: String
+      cardType: String
     }],
     wins: {
       type: Number,
