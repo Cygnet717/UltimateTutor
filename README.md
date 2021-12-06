@@ -26,7 +26,7 @@ https://www.figma.com/file/VmG8CukGLlKOtIX3V2z59X/Ultimate-Tutor?node-id=0%3A1
 - add another user to your friends by username
 - approve people requesting to be your friend
 - view friends decks
-- comment on friends decks\s\s
+- comment on friends decks
 ---
 - user settings page
 - change username
