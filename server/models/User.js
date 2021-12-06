@@ -17,15 +17,16 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
+    },
+    decks: Array,
+    pendingFriends: Array,
+    friends: Array,
+    dateJoined: { 
+      type: Date 
     }
   }
 );
 
-/* Mongoose hooks come in "pre" and "post" flavors. Pre hooks are before the database 
-action occurs, Post hooks are after the database action occurs. Here we have a "pre" 
-hook for the "save" action, and we can check whether the record being addressed at the 
-time is a new record, or a modified one. If either is true, then we need to hash
-the password. */
 userSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
