@@ -15,15 +15,15 @@ module.exports = {
   },
 
   async createDeck(req, res) {
-    const newDeck = Deck.create(req.body, {new: true})
-
-    const userOfDeck = User.findOneAndUpdate(
+    const newDeck = await Deck.create(req.body)
+ 
+    const userOfDeck = await User.findOneAndUpdate(
       {_id: req.body.user_id},
       {$push: {decks: newDeck._id}},
-      {new: true} 
+      {new: true}
       )
 
-    res.json(newDeck)
+    res.json(userOfDeck)
   },
 
   async updateDeck(req, res) {

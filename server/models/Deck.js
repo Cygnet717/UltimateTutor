@@ -35,7 +35,8 @@ const deckschema = new Schema(
       default: 0
     },
     losses: {
-      type: Number
+      type: Number,
+      default: 0
     },
     format: {
       type: String
