@@ -5,11 +5,10 @@ module.exports = {
   async getUserDecks(req, res) {
     const foundDecks = await User.findOne(
       {_id: req.body.user_id}
-      );
+    )
+      .populate('decks');
 
-    
-
-    res.json(foundDecks.decks);
+    res.json(foundDecks);
   },
 
   async newVersion(req, res) {
