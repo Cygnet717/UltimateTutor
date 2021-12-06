@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import Navbar from './components/navbar-footer/Navbar';
+import Navbar from './components/navbar/Navbar';
+import Desk from './pages/desk/Desk';
+import Friends from './pages/friends/Friends';
 import Home from './pages/home/Home';
-import Desk from './pages/Desk';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import  { AuthProvider } from './context/AuthContext'
+import Login from './pages/login/Login';
+import Signup from './pages/signup/Signup';
+import  { AuthProvider } from './context/AuthContext';
 
 import {
   BrowserRouter as Router,
@@ -21,10 +22,10 @@ function App() {
         <Navbar/>
         <Routes>
           <Route exact path="/" element={<Home/>}/>
-          <Route path="/login" element={<LoginForm/>}/>
-          <Route path="/signup" element={<SignupForm/>}/>
-          <Route path="/setting" element={<Setting/>}/>
-          <Route exact path="/profile" element={<Profile/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/signup" element={<Signup/>}/>
+          <Route path="/friends" element={<Friends/>}/>
+          <Route exact path="/desk" element={<Desk/>}/>
         </Routes>
       </AuthProvider>
     </Router>
