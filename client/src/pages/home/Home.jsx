@@ -6,7 +6,7 @@ export default function Home() {
     return (
         <div className="container">
             <h1>Home</h1>
-            <DeckFeed />
+            <p>search stuff here</p>
         </div>
     )
 }
