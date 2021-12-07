@@ -43,7 +43,10 @@ const deckschema = new Schema(
       user_id: Schema.Types.ObjectId,
       comment: String
     }],
-    dateStarted: { type: Date }
+    dateStarted: { 
+      type: Date,
+      default: new Date()  
+    }
   }
 );
 

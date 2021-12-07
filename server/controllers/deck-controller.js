@@ -2,7 +2,7 @@ const { Deck, User } = require('../models');
 
 
 module.exports = {
-  async getUserDecks(req, res) {
+  async getUserDecks(req, res) { //get all decks by user
     const foundDecks = await User.findOne(
       {_id: req.body.user_id}
     )
@@ -15,7 +15,7 @@ module.exports = {
     res.json('new version')
   },
 
-  async createDeck(req, res) {
+  async createDeck(req, res) {  //make new deck
     const newDeck = await Deck.create(req.body)
  
     const userOfDeck = await User.findOneAndUpdate(
@@ -27,7 +27,7 @@ module.exports = {
     res.json(userOfDeck)
   },
 
-  async updateDeck(req, res) {
+  async updateDeck(req, res) {  //add card to deck/sideboard
     let updatedDeck;
     if(req.body.sideboard){
       updatedDeck = await Deck.findOneAndUpdate(
