@@ -9,7 +9,7 @@ router.route('/addCard').put(addToDeck);   //add card to deck or sideboard
 router.route('/save').put(saveCurrentVersion);  //save version of deck
 router.route('/update').put(updateDeck)  // change deckName, change wins/losses
 router.route('/removeCard').put(removeCard) //remove card from deck, 
-router.route('/removeDeck').delete(removeDeck) //delete deck
+router.route('/removeDeck/:deck_id').delete(removeDeck) //delete deck
 //mark card as commander, 
 //add comment on deck
 module.exports = router;
