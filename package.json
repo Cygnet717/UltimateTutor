@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "npx nodemon server/server.js",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build"
@@ -21,6 +21,8 @@
   "homepage": "https://github.com/Cygnet717/UltimateTutor#readme",
   "dependencies": {
     "concurrently": "^6.4.0",
-    "mongoose": "^6.0.14"
+    "jwt-decode": "^3.1.2",
+    "mongoose": "^6.0.14",
+    "react-router-dom": "^6.0.2"
   }
 }

@@ -27,7 +27,8 @@ const userSchema = new Schema(
     pendingFriends: Array,
     friends: Array,
     dateJoined: { 
-      type: Date 
+      type: Date,
+      default: new Date() 
     }
   }
 );
