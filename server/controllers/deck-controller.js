@@ -103,6 +103,30 @@ module.exports = {
 
   },
 
+  async toggleCommander(req, res){ // send deck_id, card_id
+    try{
+      const targetCard = Deck.find(
+        {_id: req.body.deck_id, deckCards: {_id: req.body.card_id}}
+        )
+        // db.getCollection('decks').aggregate([
+        //   {$project: 
+        //       {"matchedIndex": 
+        //           {$indexOfArray: ['$deckCards', {_id: ObjectId("61af9dbb2fb3cb027289ce17")}]
+        //            }
+        //        }
+        //    }
+        //    ])
+
+      const commandered = Deck.findOneAndUpdate(
+        {_id: req.body.deck_id},
+        {$set: {deckCards: {commander: true}}}
+      )
+      console.log(commandered)
+    } catch (err){
+      res.status(400).json(err)
+    }
+  },
+
   //remove card from deck
   async removeCard (req, res) {  // send "deck_id", "sideBoard"boolean, "card_id"
     let deletedCard;
@@ -127,11 +151,14 @@ module.exports = {
   },
 
   //delete deck
-  async removeDeck (req, res) {  //send deck_id parameter in url 
+  async removeDeck (req, res) {  //send in url parameters for "deck_id" and "user_id"
     try{  //cant send a body in a delete request
+      console.log(req.params.user_id)
       const updatedUser = await User.findOneAndUpdate(
-        //somehow need to find user and remove deck_id from their deck list
+        {_id: req.params.user_id},
+        {$pull: {'decks': req.params.deck_id}}
       )
+      console.log(updatedUser)
       const deletedDeck = await Deck.remove({_id: req.params.deck_id})
       res.json(deletedDeck)
     } catch (err){
