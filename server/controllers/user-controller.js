@@ -47,5 +47,35 @@ module.exports = {
     }
     const token = signToken(user);
     res.json({ token, user });
+  },
+
+  async updateUser(req, res){  //send username, email
+    try{
+      const updatedUser = await User.update(req.body, {where: {_id: req.body.user_id}})
+
+      res.json(updatedUser)
+    }catch (err){
+      res.status(400).json(err)
+    }
+  },
+
+  async makefriend(req, res){  //send loggedin user_id, friend_id
+    try{
+      const checkFriend = await User.find()
+      //user1 sends friend_id
+      //if user1.pendingfriends contains friend_id move to friend array add user_id to friend_id friends array
+      //if user1.pendingfriends doesnt contain friend_id add user1 to friends pending array
+    }catch (err){
+      res.status(400).json(err)
+    }
+  },
+  
+  async dropFriend(req, res){  //send loggedin user_id, friend_id
+    try{
+      //remove user_id from friend_id friend list or pending list
+      //remove friend_id from user_id friend list or pending list
+    }catch (err){
+      res.status(400).json(err)
+    }
   }
 };

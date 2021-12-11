@@ -103,25 +103,13 @@ module.exports = {
 
   },
 
-  async toggleCommander(req, res){ // send deck_id, card_id
+  async toggleCommander(req, res){ // send deck_id, card_id, commander booleantobe
     try{
-      const targetCard = Deck.find(
-        {_id: req.body.deck_id, deckCards: {_id: req.body.card_id}}
-        )
-        // db.getCollection('decks').aggregate([
-        //   {$project: 
-        //       {"matchedIndex": 
-        //           {$indexOfArray: ['$deckCards', {_id: ObjectId("61af9dbb2fb3cb027289ce17")}]
-        //            }
-        //        }
-        //    }
-        //    ])
-
-      const commandered = Deck.findOneAndUpdate(
-        {_id: req.body.deck_id},
-        {$set: {deckCards: {commander: true}}}
+      const commandered = await Deck.updateOne(
+        {_id: req.body.deck_id, 'deckCards._id': req.body.card_id},
+        {$set: {'deckCards.$.commander': req.body.commander}}
       )
-      console.log(commandered)
+      res.json(commandered)
     } catch (err){
       res.status(400).json(err)
     }
@@ -153,7 +141,6 @@ module.exports = {
   //delete deck
   async removeDeck (req, res) {  //send in url parameters for "deck_id" and "user_id"
     try{  //cant send a body in a delete request
-      console.log(req.params.user_id)
       const updatedUser = await User.findOneAndUpdate(
         {_id: req.params.user_id},
         {$pull: {'decks': req.params.deck_id}}
