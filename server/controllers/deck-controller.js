@@ -103,7 +103,7 @@ module.exports = {
 
   },
 
-  async toggleCommander(req, res){ // send deck_id, card_id, commander booleantobe
+  async toggleCommander(req, res){ // send deck_id, card_id, commander boolean
     try{
       const commandered = await Deck.updateOne(
         {_id: req.body.deck_id, 'deckCards._id': req.body.card_id},
