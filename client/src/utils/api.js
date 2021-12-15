@@ -23,6 +23,7 @@ export const createUser = async (userData) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "accepts":"application/json"
     },
     body: JSON.stringify(userData),
   });
