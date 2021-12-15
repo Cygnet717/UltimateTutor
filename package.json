@@ -20,9 +20,6 @@
   },
   "homepage": "https://github.com/Cygnet717/UltimateTutor#readme",
   "dependencies": {
-    "concurrently": "^6.4.0",
-    "jwt-decode": "^3.1.2",
-    "mongoose": "^6.0.14",
-    "react-router-dom": "^6.0.2"
+    "concurrently": "^6.4.0"
   }
 }
