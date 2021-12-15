@@ -1,7 +1,8 @@
-export const getMe = async () => {
+export const getMe = async (token) => {
   const result = await fetch (`/api/user/me`, {
     headers: {
       "Content-Type": "application/json",
+      'authorization': `Bearer ${token}`
     },
   });
   return result;
