@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState , useContext} from 'react';
+import {AuthContext} from '../../context/AuthContext';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { loginUser } from '../../utils/api';
 import Auth from '../../utils/auth';
@@ -6,8 +7,8 @@ import './Login.css';
 
 export default function Login() {
   const [ userFormData, setUserFormData ] = useState({ email: '', password: '' });
-  const [ validated, setValidated ] = useState(false);
   const [ showAlert, setShowAlert ] = useState(false);
+  const {setUserDecks} = useContext(AuthContext)
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -26,6 +27,7 @@ export default function Login() {
 
       const { token, user } = await response.json();
       Auth.login(token);
+      setUserDecks(user.decks)
     } catch (err) {
       console.error(err);
       setShowAlert(true);
@@ -39,7 +41,7 @@ export default function Login() {
   return (
     <div className="container">
       <h1>Login</h1>
-      <Form  noValidate validated={validated} onSubmit={handleFormSubmit}>
+      <Form  noValidate validated={false} onSubmit={handleFormSubmit}>
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
           Something went wrong with your login credentials!
         </Alert>

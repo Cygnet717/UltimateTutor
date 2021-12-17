@@ -1,7 +1,6 @@
 export const getUserDecks = async(user_id) => { //variables needed: "user_id"
-  const result = await fetch(`/api/decks`, {
+  const result = await fetch(`/api/decks/${user_id}`, {
     method: "GET",
-    body: JSON.stringify(user_id),
     headers: {
       "Content-Type": "application/json",
     },

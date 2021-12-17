@@ -6,7 +6,7 @@ module.exports = {
   async getUserDecks(req, res) { // send "user_id" in body
     try{
       const foundDecks = await User.findOne(
-        {_id: req.body.user_id}
+        {_id: req.params.user_id}
       )
         .populate('decks');
 

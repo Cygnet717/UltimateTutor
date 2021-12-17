@@ -3,7 +3,7 @@ const { getUserDecks, createDeck, addToDeck, saveCurrentVersion,  updateDeck , r
 
 //api/decks
 
-router.route('/').get(getUserDecks);  //get decks by user id
+router.route('/:user_id').get(getUserDecks);  //get decks by user id
 router.route('/create').post(createDeck);  //create all new deck //create new version of deck
 router.route('/addCard').put(addToDeck);   //add card to deck or sideboard
 router.route('/save').put(saveCurrentVersion);  //save version of deck

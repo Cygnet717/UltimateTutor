@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import  { AuthContext } from '../../context/AuthContext';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { createUser } from '../../utils/api';
 import Auth from '../../utils/auth';
@@ -6,8 +7,10 @@ import './Signup.css'
 
 export default function SignUp() {
   const [ userFormData, setUserFormData ] = useState({ email: '', password: '', username: '' });
-  const [ validated, setValidated ] = useState(false);
+  // const [ validated, setValidated ] = useState(false);
   const [ showAlert, setShowAlert ] = useState(false);
+
+  const [context, setContext] = useContext(AuthContext)
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -26,6 +29,7 @@ export default function SignUp() {
 
       const { token } = await response.json();
       Auth.login(token);
+      setContext(token)
     } catch (err) {
       console.error(err);
       setShowAlert(true);
@@ -41,7 +45,7 @@ export default function SignUp() {
   return (
     <div className="container">
       <h1>SignUp</h1>
-      <Form  noValidate validated={validated} onSubmit={handleFormSubmit}>
+      <Form  noValidate validated={false} onSubmit={handleFormSubmit}>
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
           Something went wrong with your SignUp credentials!
         </Alert>

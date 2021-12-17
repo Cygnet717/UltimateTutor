@@ -1,5 +1,5 @@
 export const getMe = async (token) => {
-  const result = await fetch (`/api/user/me`, {
+  const result = await fetch (`/api/users/me`, {
     headers: {
       "Content-Type": "application/json",
       'authorization': `Bearer ${token}`
@@ -9,7 +9,7 @@ export const getMe = async (token) => {
 };
 
 export const getAllUser = async () => {
-  const result = await fetch(`/api/user`, {
+  const result = await fetch(`/api/users`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -19,7 +19,8 @@ export const getAllUser = async () => {
 };
 
 export const createUser = async (userData) => {
-  const result = await fetch("/api/user", {
+  console.log(userData)
+  const result = await fetch("/api/users", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -31,7 +32,7 @@ export const createUser = async (userData) => {
 };
 
 export const loginUser = async (userData) => {
-  const result = await fetch(`/api/user/login`, {
+  const result = await fetch(`/api/users/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -42,7 +43,7 @@ export const loginUser = async (userData) => {
 };
 
 export const updateUser = async(userData) => {
-  const result = await fetch(`/api/user/update`, {
+  const result = await fetch(`/api/users/update`, {
     method: "PUT",
     body: JSON.stringify(userData),
     headers: {
@@ -53,7 +54,7 @@ export const updateUser = async(userData) => {
 }
 
 export const makeFriend = async(userData) => {
-  const result = await fetch(`/api/user/make-friend`, {
+  const result = await fetch(`/api/users/make-friend`, {
     method: "PUT",
     body: JSON.stringify(userData),
     headers: {
@@ -64,7 +65,7 @@ export const makeFriend = async(userData) => {
 };
 
 export const dropFriend  =async(userData) => {
-  const result = await fetch(`/api/user/drop-friend`, {
+  const result = await fetch(`/api/users/drop-friend`, {
     method: "PUT",
     body: JSON.stringify(userData),
     headers: {

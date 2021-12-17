@@ -1,6 +1,6 @@
 import React from 'react';
 import './Home.css';
-import DeckFeed from '../../components/deckfeed/DeckFeed';
+// import DeckFeed from '../../components/deckfeed/DeckFeed';
 
 export default function Home() {
     return (

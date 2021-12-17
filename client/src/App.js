@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import Navbar from './components/navbar/Navbar';
 import Desk from './pages/desk/Desk';
 import Friends from './pages/friends/Friends';
@@ -7,6 +7,8 @@ import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
 import  { AuthProvider } from './context/AuthContext';
 
+// import {useContext} from "react";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,7 +16,6 @@ import {
 } from "react-router-dom";
 
 function App() {
-  // const [ authState, setAuthState ] = useState({})
 
   return (
     <Router>

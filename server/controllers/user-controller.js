@@ -16,7 +16,6 @@ module.exports = {
     res.json(foundUser);
   },
 
-
   async getUsers(req, res) {
     console.log("finding users")
     const foundUsers = await User.find({});

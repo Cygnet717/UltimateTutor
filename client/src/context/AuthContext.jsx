@@ -1,29 +1,44 @@
 import { createContext, useContext, useState, useEffect } from "react"
+import { getUserDecks} from '../utils/deckApi'
 import Auth from "../utils/auth"
 
 const AuthContext = createContext()
 export const useAuthContext = () => useContext(AuthContext)
 
 const AuthProvider = ({children}) => {
-  const [ authState, setAuthState ] = useState({})
-  const providerVals = { ...authState, setAuthState }
+  const [ user, setuser ] = useState({data: {username: 'default'}})
+  const [userDecks, setUserDecks] = useState([]);
 
   const checkForAuthUser = async () => {
-    let loggedInUser = null;
+    let loggedInUser = {data: {username: 'default'}};
     try {
       loggedInUser = Auth.getProfile()
+
     } catch( e ){
       console.log(e)
     }
-    setAuthState(loggedInUser)
+    setuser(loggedInUser)
+  }
+
+  const checkForDecks = async () => {
+    let decks = []
+    if(user.data._id){ 
+      let response = await getUserDecks(user.data._id)
+      decks = await response.json()
+    }
+    
+    setUserDecks(decks)
   }
 
   useEffect( () => {
     checkForAuthUser()
   }, [])
+  useEffect(() => {
+    checkForDecks()
+  }, [user])
 
   return (
-    <AuthContext.Provider value={{ authState, setAuthState }}>
+    <AuthContext.Provider value={{ user, setuser, userDecks, setUserDecks }}>
       {children}
     </AuthContext.Provider>
   )
