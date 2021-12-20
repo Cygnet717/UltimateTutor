@@ -10,18 +10,21 @@ const AuthProvider = ({children}) => {
   const [userDecks, setUserDecks] = useState([]);
 
   const checkForAuthUser = async () => {
-    let loggedInUser = {data: {username: 'default'}};
-    try {
-      loggedInUser = Auth.getProfile()
+      let loggedInUser = Auth.loggedIn()
 
-    } catch( e ){
-      console.log(e)
-    }
+      if(!loggedInUser){
+        loggedInUser = {data: {username: 'default'}};
+      } else {
+        loggedInUser = Auth.getProfile()
+      }
+
+    console.log(loggedInUser)
     setuser(loggedInUser)
   }
 
   const checkForDecks = async () => {
     let decks = []
+    
     if(user.data._id){ 
       let response = await getUserDecks(user.data._id)
       decks = await response.json()

@@ -24,7 +24,7 @@ export default function Navbar() {
   }
   
   return (
-    <div style={style.header} className="container">
+    <div style={style.header}>
       <h1 style={style.pageName}>Ultimate Tutor</h1>
       {user.data.username ==='default'? 
             (<h4>Please log in</h4>)
@@ -35,9 +35,9 @@ export default function Navbar() {
         {
           user.data._id?(
             <>
-              <Link to='/'>LogOut</Link>
-              <Link to="friends">Friends</Link>
               <Link to="desk">My Desk</Link>
+              <Link to="friends">Friends</Link>
+              <Link to='/'>LogOut</Link>
             </>
           ) : (
             <>
