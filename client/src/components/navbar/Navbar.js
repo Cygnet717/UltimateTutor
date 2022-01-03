@@ -8,7 +8,7 @@ export default function Navbar() {
 
   
   return (
-    <div className='header container'>
+    <div className='header'>
       <h1 className='pageName'>Ultimate Tutor</h1>
       {user.data.username ==='default'? 
             (<h4>Please log in</h4>)

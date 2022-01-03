@@ -4,9 +4,9 @@ import cardImage from '../../images/Magic_card_back.jpg'
 
 export default function Card() {
     return (
-        <div className="container">
-            <h4>Card Name</h4>
-            <img src={cardImage}/>
+        <div className="snigleCard">
+            <p>Card Name</p>
+            <img className='cardImage' src={cardImage}/>
         </div>
     )
 }
