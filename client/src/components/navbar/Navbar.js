@@ -1,37 +1,21 @@
 import React, { useContext } from 'react';
-import './Navbar.css'
 import {Link} from 'react-router-dom';
 import {AuthContext} from "../../context/AuthContext"
+import './Navbar.css'
 
 export default function Navbar() {
   const {user} = useContext(AuthContext)
 
-  const style = {
-    header: {
-      display: 'flex',
-      flexDirection: "row",
-      justifyContent: "space-between",
-      outline: '2px solid red'
-    },
-    linkDiv: {
-      display: 'flex',
-      justifyContent: "space-between",
-      width: '40%'
-    },
-    pageName: {
-      margin: '20px'
-    }
-  }
   
   return (
-    <div style={style.header}>
-      <h1 style={style.pageName}>Ultimate Tutor</h1>
+    <div className='header container'>
+      <h1 className='pageName'>Ultimate Tutor</h1>
       {user.data.username ==='default'? 
             (<h4>Please log in</h4>)
             :
             (<h1>Hello {user.data.username}</h1>)}
 
-      <div style={style.linkDiv}>
+      <div className='linkDiv'>
         {
           user.data._id?(
             <>
