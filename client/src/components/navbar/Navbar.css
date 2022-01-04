@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  outline: 2px solid orange;
+}
+
+.linkDiv {
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+}
+.pageName {
+  margin: 20px;
+}

@@ -1,4 +1,3 @@
-// import { useState, useEffect } from "react";
 import Navbar from './components/navbar/Navbar';
 import Desk from './pages/desk/Desk';
 import Friends from './pages/friends/Friends';
@@ -6,14 +5,9 @@ import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
 import  { AuthProvider } from './context/AuthContext';
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import './App.css';
 
-// import {useContext} from "react";
-
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from "react-router-dom";
 
 function App() {
 
