@@ -1,7 +1,54 @@
 
 .resultsContainer {
-    border: 1px solid black;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.searchForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.searchSection {
+  display: flex;
+}
+
+.fitContent {
+  margin: 5px 10px;
+}
+
+.color {
+  margin: 0 10px;
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.white {
+ 
+}
+
+.blue {
+  background-color: blue;
+}
+
+.black {
+  background-color: black;
+  color: white;
+}
+ 
+.red {
+  background-color: crimson;
+}
+
+.green {
+  background-color: green;
+}
+
+.colorless {
+  background-color: grey;
 }
