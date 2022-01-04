@@ -21,7 +21,7 @@ export default function DeskFeed() {
             </div>
             <div className='deckSection'>
               <div>Date Created: {date}</div>
-              {deck.format == 'commander'?
+              {deck.format === 'commander'?
                 (
                   <p>Commander: {commander.cardName}</p>
                 ):(

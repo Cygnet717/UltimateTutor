@@ -6,7 +6,7 @@ export default function Card() {
   return (
     <div className="snigleCard">
       <p>Card Name</p>
-      <img className='cardImage' src={cardImage}/>
+      <img className='cardImage' alt='card name' src={cardImage}/>
       <form>
         <select>
           <option>Pick Deck</option>
