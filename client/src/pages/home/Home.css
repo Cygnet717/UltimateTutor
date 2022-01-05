@@ -24,16 +24,16 @@
 .color {
   margin: 0 10px;
   border-radius: 10px;
-  border: 1px solid black;
   padding: 5px;
 }
 
 .white {
+  border: 1px solid black;
  
 }
 
 .blue {
-  background-color: blue;
+  background-color: rgb(0, 60, 255);
 }
 
 .black {
@@ -42,13 +42,13 @@
 }
  
 .red {
-  background-color: crimson;
+  background-color: rgb(255, 0, 0);
 }
 
 .green {
-  background-color: green;
+  background-color: rgb(2, 177, 2);
 }
 
 .colorless {
-  background-color: grey;
+  background-color: rgb(187, 187, 187);
 }
