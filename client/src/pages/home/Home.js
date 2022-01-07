@@ -9,7 +9,12 @@ export default function Home() {
 
   const handleInputChange = (event) => {
     const {name, value} = event.target;
-    setSearchFormData({...userFormData, [name]: value});
+    setSearchFormData({...searchFormData, [name]: value});
+  }
+
+  const handleColorChange = (event) => {
+    console.log(event.target.value)
+    console.log(event.target.checked)
   }
   
   const handleSearchSubmit = async (event) => {
@@ -40,22 +45,22 @@ export default function Home() {
         </div>
         <div className='searchSection'>
           <div className='color white'>
-            <Form.Check type="checkbox" id="custom-checkbox" label="White" name='color' value="w" onChange={handleInputChange}/>
+            <Form.Check type="checkbox" id="custom-checkbox" label="White" name='color' value="w" onChange={handleColorChange}/>
           </div>
           <div className='color blue'>
-            <Form.Check type="checkbox" id="custom-checkbox" label="Blue" name='color' value="u" onChange={handleInputChange}/> 
+            <Form.Check type="checkbox" id="custom-checkbox" label="Blue" name='color' value="u" onChange={handleColorChange}/> 
           </div>
           <div className='color black'>
-            <Form.Check type="checkbox" id="custom-checkbox" label="Black" name='color' value="b" onChange={handleInputChange}/> 
+            <Form.Check type="checkbox" id="custom-checkbox" label="Black" name='color' value="b" onChange={handleColorChange}/> 
           </div>
           <div className='color red'>
-            <Form.Check type="checkbox" id="custom-checkbox" label="Red" name='color' value="r" onChange={handleInputChange}/> 
+            <Form.Check type="checkbox" id="custom-checkbox" label="Red" name='color' value="r" onChange={handleColorChange}/> 
           </div>
           <div className='color green'>
-            <Form.Check type="checkbox" id="custom-checkbox" label="Green" name='color' value="g" onChange={handleInputChange}/>
+            <Form.Check type="checkbox" id="custom-checkbox" label="Green" name='color' value="g" onChange={handleColorChange}/>
           </div>
           <div className='color colorless'>
-            <Form.Check type="checkbox" id="custom-checkbox" label="Colorless" value="c" name='color' onChange={handleInputChange}/> 
+            <Form.Check type="checkbox" id="custom-checkbox" label="Colorless" value="c" name='color' onChange={handleColorChange}/> 
           </div>
           <div className='color multicolor'>
             <Form.Check type="checkbox" id="custom-checkbox" label="Multicolor" value="m" name='color' onChange={handleInputChange}/> 
