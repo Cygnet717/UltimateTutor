@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import './Home.css';
 import { Form, Button, FormControl } from 'react-bootstrap';
 import Card from '../../components/card/Card'
-import scryfallSearch from '../../utils/scryfallApiCalls'
+import {scryfallSearch} from '../../utils/scryfallApiCalls'
 
 export default function Home() {
-  const [advSearch, setAdvSearch] = useState(false)
+  const [advSearch, setAdvSearch] = useState({})
   const [searchFormData, setSearchFormData] = useState({color: ''})
-  const [searchResults, setSearchResults] = useState({})
+  const [searchResults, setSearchResults] = useState(false)
 
   const handleInputChange = (event) => {
     const {name, value} = event.target;
@@ -30,11 +30,12 @@ export default function Home() {
   
   const handleSearchSubmit = async (event) => {
     event.preventDefault();
-    console.log(searchFormData.cardName)
+    // console.log(searchFormData.cardName)
     let response = await scryfallSearch('t%3Acreature color%3Ar pow>5')
     let cardResults = await response.json()
     setSearchResults(cardResults)
-    console.log(searchFormData)
+    console.log(searchResults)
+    // console.log(searchFormData)
   }
   
   return (
@@ -98,8 +99,10 @@ export default function Home() {
     <div className="resultsContainer">
       
       
-      {searchResults?
-        <>Results</>
+      {searchResults.data?
+        <>{searchResults.data.map(card => 
+          <Card/>
+        )}</>
         :
         <>
         <Card/>
