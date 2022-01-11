@@ -101,7 +101,7 @@ export default function Home() {
       
       {searchResults.data?
         <>{searchResults.data.map(card => 
-          <Card/>
+          <Card cardData={card} key={card.id}/>
         )}</>
         :
         <>
