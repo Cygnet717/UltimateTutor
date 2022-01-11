@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import './Home.css';
 import { Form, Button, FormControl } from 'react-bootstrap';
 import Card from '../../components/card/Card'
-import {scryfallSearch} from '../../utils/scryfallApiCalls'
+import {scryfallSearch, scryfallNamedSearch} from '../../utils/scryfallApiCalls'
 
 export default function Home() {
-  const [advSearch, setAdvSearch] = useState({})
-  const [searchFormData, setSearchFormData] = useState({color: ''})
+  const [advSearch, setAdvSearch] = useState(false)
+  const [searchFormData, setSearchFormData] = useState({color: '%3A'}) //'%3A' Percent-encoding for ':'
   const [searchResults, setSearchResults] = useState(false)
 
   const handleInputChange = (event) => {
@@ -19,23 +19,47 @@ export default function Home() {
 
     //if true add color to list
     if(event.target.checked){
-      let newColorList = colorList.concat(event.target.value)
+      let newColorList;
+      if(event.target.value === 'm'){
+        newColorList = colorList.substring(0, 2)+ 'E' + colorList.substring(3)//change percent-encoding to '>'
+      } else {
+        newColorList = colorList.concat(event.target.value)
+      }
       setSearchFormData({...searchFormData, color: newColorList})
+
     } else {//if false remove color from list
-      let newColorList = colorList.replace(event.target.value, '')
+      let newColorList;
+      if(event.target.value === 'm'){
+        newColorList = colorList.substring(0, 2)+ 'A' + colorList.substring(3)
+      } else {
+        newColorList = colorList.replace(event.target.value, '')
+      }
       setSearchFormData({...searchFormData, color: newColorList})
     }
-    
   }
   
   const handleSearchSubmit = async (event) => {
     event.preventDefault();
-    // console.log(searchFormData.cardName)
-    let response = await scryfallSearch('t%3Acreature color%3Ar pow>5')
-    let cardResults = await response.json()
-    setSearchResults(cardResults)
-    console.log(searchResults)
-    // console.log(searchFormData)
+    let response;
+    let cardResults;
+
+    if(searchFormData.cardName){
+      response = await scryfallNamedSearch(searchFormData.cardName);
+      cardResults = await response.json();
+      setSearchResults(cardResults)
+    } else {
+      let query = '';
+      if(searchFormData.color.length > 3){
+        query = query.concat(" color" + searchFormData.color)
+      }
+      if(searchFormData.type){
+        query = query.concat(' t%3A' + searchFormData.type)
+      }
+      response = await scryfallSearch(query);
+      cardResults = await response.json();
+      setSearchResults(cardResults);
+    }
+    
   }
   
   return (
@@ -43,8 +67,8 @@ export default function Home() {
     <div>
       <Form className='searchForm' onSubmit={handleSearchSubmit}>
         <div className='searchSection'>
-          <Form.Select aria-label="select card type" className='fitContent' name="t:" onChange={handleInputChange}>
-            <option>Card Type</option>
+          <Form.Select aria-label="select card type" className='fitContent' name="type" onChange={handleInputChange}>
+            <option value=''>Card Type</option>
             <option value="creature">Creature</option>
             <option value="sorcery">Sorcery</option>
             <option value="instant">Instant</option>
@@ -78,7 +102,7 @@ export default function Home() {
             <Form.Check type="checkbox" id="custom-checkbox" label="Colorless" value="c" name='color' onChange={handleColorChange}/> 
           </div>
           <div className='color multicolor'>
-            <Form.Check type="checkbox" id="custom-checkbox" label="Multicolor" value="m" name='color' onChange={handleInputChange}/> 
+            <Form.Check type="checkbox" id="custom-checkbox" label="Multicolor" value="m" name='color' onChange={handleColorChange}/> 
           </div>
         </div>
         {advSearch? 
@@ -101,7 +125,7 @@ export default function Home() {
       
       {searchResults.data?
         <>{searchResults.data.map(card => 
-          <Card/>
+          <Card cardData={card} key={card.id}/>
         )}</>
         :
         <>

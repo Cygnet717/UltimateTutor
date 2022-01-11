@@ -2,11 +2,37 @@ import React from 'react';
 import './Card.css'
 import cardImage from '../../images/Magic_card_back.jpg'
 
-export default function Card() {
+export default function Card(props) {
+  let frontSideImage = cardImage;
+  let backSideImage = cardImage;
+  let isDoubleSided = false;
+  if(props.cardData){
+    if(props.cardData.image_uris){
+      frontSideImage = props.cardData.image_uris.small
+    }else{
+      isDoubleSided = true;
+      frontSideImage = props.cardData.card_faces[0].image_uris.small;
+      backSideImage = props.cardData.card_faces[1].image_uris.small;
+    }
+  }
+
+  function flipCard (e){
+    let currentImage = e.currentTarget.src
+    if(currentImage === frontSideImage){
+      e.currentTarget.src = backSideImage
+    } else {
+      e.currentTarget.src = frontSideImage
+    }
+  }
   return (
-    <div className="snigleCard">
-      <p>Card Name</p>
-      <img className='cardImage' alt='card name' src={cardImage}/>
+    <div className="singleCard">
+      <p>{props.cardData? props.cardData.name : "Card Name"}</p>
+      {isDoubleSided? 
+        <img className='cardImage' alt={props.cardData? props.cardData.name : "Card Name"} src={frontSideImage} onClick={e => flipCard(e)}/>
+        :
+        <img className='cardImage' alt={props.cardData? props.cardData.name : "Card Name"} src={frontSideImage}/>
+      }
+
       <form>
         <select>
           <option>Pick Deck</option>
@@ -19,4 +45,5 @@ export default function Card() {
 
     </div>
   )
-}
+}//props.cardData? props.cardData.image_uris.normal : 
+//
