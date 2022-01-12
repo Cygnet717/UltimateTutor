@@ -1,13 +1,41 @@
-import React, { useContext } from 'react';
-import {v4 as uuid} from 'uuid'
+import React, { useContext, useState } from 'react';
+import {v4 as uuid} from 'uuid';
+import {Form, Button, Container, Row, Col} from 'react-bootstrap';
+import {AuthContext} from "../../context/AuthContext";
+import {createDeck} from '../../utils/deckApi';
 import './DeskFeed.css';
-import {AuthContext} from "../../context/AuthContext"
 
 export default function DeskFeed() {
+  const {user} = useContext(AuthContext)
   const {userDecks} = useContext(AuthContext)
+  const [currentDecks, setCurrentDecks] = useState()
+  const [newDeckData, setNewDeckData] = useState()
   console.log(userDecks)
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setNewDeckData({ ...newDeckData, user_id: user.data._id, [name]: value });
+  };
+
+  const createNewDeck = async (e) => {
+    // e.preventDefault()
+    
+    try{
+      const response = await createDeck(newDeckData)
+
+      if (!response.ok) {
+        throw new Error('something went wrong!');
+      }
+      const newDeck = await response.json()
+      console.log(newDeck)
+    } catch (err){
+      console.error(err)
+    }
+    setNewDeckData({user_id: user.data._id, deckName: '', format: ''})
+  }
+
   return (
-    <div className="container">
+    <div className="deskFeed">
       {userDecks.map(deck => {
         let date = new Date(deck.dateStarted).toLocaleDateString()
         let commander = deck.deckCards.find(card => card.commander )
@@ -33,7 +61,30 @@ export default function DeskFeed() {
         )
       })}
       <div className='singleDeck'>
-        <h3>New Deck +</h3>
+        <Form onSubmit={createNewDeck}>
+          <Container>
+            <Row>
+              <Col>
+                <Form.Group className="mb-3">
+                  <Form.Control id="deckNameTextInput" placeholder="New Deck Name" name='deckName' onChange={handleInputChange}/>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group className="mb-3">
+                  <Form.Select id="Format" name="format" onChange={handleInputChange}>
+                    <option>Select Format</option>
+                    <option value='Standard'>Standard</option>
+                    <option value='Commander'>Commander</option>
+                    <option value='Historic'>Historic</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Button type="submit">Create</Button>
+            </Row>
+          </Container>
+        </Form>
       </div>
     </div>
   )

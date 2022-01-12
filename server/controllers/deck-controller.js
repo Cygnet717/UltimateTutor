@@ -29,7 +29,6 @@ module.exports = {
         {$push: {decks: newDeck._id}},
         {new: true}
         )
-
       res.json(userOfDeck)
     } catch (err){
       res.status(400).json(err)

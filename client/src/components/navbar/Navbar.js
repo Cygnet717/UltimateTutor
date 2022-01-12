@@ -16,8 +16,8 @@ export default function Navbar() {
             (<h1>Hello {user.data.username}</h1>)}
 
       <div className='linkDiv'>
-        {
-          user.data._id?(
+        {user.data._id?
+          (
             <>
               <Link to="desk">My Desk</Link>
               <Link to="friends">Friends</Link>

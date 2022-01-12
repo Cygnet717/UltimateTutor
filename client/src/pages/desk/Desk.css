@@ -1,0 +1,5 @@
+.desk {
+  display: flex;
+  outline: 1px solid green;
+  justify-content: space-around;
+}

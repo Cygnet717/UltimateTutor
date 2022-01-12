@@ -8,4 +8,12 @@
   border-left: 2px solid black;
   width: 100%;
   margin: 20px 0;
+  
+}
+
+.deskFeed {
+  display: flex;
+  flex-direction: column;
+  outline: 1px solid red;
+  width: 60vw;
 }
