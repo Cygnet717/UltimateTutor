@@ -1,11 +1,25 @@
-.deckSection{
-  display: flex;
-  justify-content: space-between;
-}
+
 
 .singleDeck {
   border-bottom: 2px solid black;
   border-left: 2px solid black;
   width: 100%;
   margin: 20px 0;
+  
+}
+
+.deskFeed {
+  display: flex;
+  flex-direction: column;
+  width: 60vw;
+}
+
+.deleteButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.border {
+  outline: 1px solid purple
 }

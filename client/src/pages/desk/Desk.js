@@ -6,7 +6,7 @@ import DeskFeed from '../../components/deskfeed/DeskFeed';
 export default function Desk() {
   const {user} = useContext(AuthContext)
   return (
-    <div className="container">
+    <div className="desk">
       <h1>{user.data.username}'s Desk</h1>
       <DeskFeed />
     </div>

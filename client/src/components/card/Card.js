@@ -32,18 +32,20 @@ export default function Card(props) {
         :
         <img className='cardImage' alt={props.cardData? props.cardData.name : "Card Name"} src={frontSideImage}/>
       }
-
-      <form>
-        <select>
-          <option>Pick Deck</option>
-          <option>deck 1</option>
-          <option>deck 2</option>
-          <option>deck 3</option>
-        </select>
-        <button>Add</button>
-      </form>
+      {props.loggedIn ? 
+        <form>
+          <select>
+            <option>Pick Deck</option>
+            <option>deck 1</option>
+            <option>deck 2</option>
+            <option>deck 3</option>
+          </select>
+          <button>Add</button>
+        </form>
+        :
+        <>Login to build decks</>
+      }
 
     </div>
   )
-}//props.cardData? props.cardData.image_uris.normal : 
-//
+}

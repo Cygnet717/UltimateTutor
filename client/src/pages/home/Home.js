@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import './Home.css';
 import { Form, Button, FormControl } from 'react-bootstrap';
+import {AuthContext} from "../../context/AuthContext"
 import Card from '../../components/card/Card'
 import {scryfallSearch, scryfallNamedSearch} from '../../utils/scryfallApiCalls'
 
@@ -8,6 +9,8 @@ export default function Home() {
   const [advSearch, setAdvSearch] = useState(false)
   const [searchFormData, setSearchFormData] = useState({color: '%3A'}) //'%3A' Percent-encoding for ':'
   const [searchResults, setSearchResults] = useState(false)
+  const {user} = useContext(AuthContext)
+  const loggedIn = user.data.username ==='default'? false: true
 
   const handleInputChange = (event) => {
     const {name, value} = event.target;
@@ -125,14 +128,14 @@ export default function Home() {
       
       {searchResults.data?
         <>{searchResults.data.map(card => 
-          <Card cardData={card} key={card.id}/>
+          <Card cardData={card} loggedIn={loggedIn} key={card.id}/>
         )}</>
         :
         <>
-        <Card/>
-      <Card/>
-      <Card/>
-      <Card/>
+          <Card loggedIn={loggedIn}/>
+          <Card loggedIn={loggedIn}/>
+          <Card loggedIn={loggedIn}/>
+          <Card loggedIn={loggedIn}/>
         </>
       }
   
