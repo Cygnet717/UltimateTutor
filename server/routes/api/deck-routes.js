@@ -1,9 +1,10 @@
 const router = require('express').Router();
-const { getUserDecks, createDeck, addToDeck, saveCurrentVersion,  updateDeck , removeCard, removeDeck, toggleCommander} = require('../../controllers/deck-controller');
+const { getUserDecks, getDeck, createDeck, addToDeck, saveCurrentVersion,  updateDeck , removeCard, removeDeck, toggleCommander} = require('../../controllers/deck-controller');
 
 //api/decks
 
 router.route('/:user_id').get(getUserDecks);  //get decks by user id
+router.route('/:deck_id').get(getDeck)
 router.route('/create').post(createDeck);  //create all new deck //create new version of deck
 router.route('/addCard').put(addToDeck);   //add card to deck or sideboard
 router.route('/save').put(saveCurrentVersion);  //save version of deck

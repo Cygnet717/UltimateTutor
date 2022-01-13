@@ -49,6 +49,11 @@ export default function DeskFeed() {
     }
   }
 
+  const showDeckList = (id) => {
+    console.log(id)
+    //window.location.assign(`/deckList/:${_id}`)
+  }
+
   return (
     <div className="deskFeed">
       {userDecks.map(deck => {
@@ -58,7 +63,7 @@ export default function DeskFeed() {
           <Container className='singleDeck' key={uuid()}>
             <Col>
               <Container >
-                  <Col><Link to="deckList">{deck.deckName}</Link></Col>
+                  <Col onCLick={() => showDeckList(deck._id)}>{deck.deckName}</Col>
                   <Col>Card Count: {deck.deckCards.length}</Col>
                   <Col>Side Board: {deck.sideBoard.length}</Col>
                   {/* <Col>Version: {deck.versionToBe -1} <button>Save Version</button></Col> --simplify MVP*/}

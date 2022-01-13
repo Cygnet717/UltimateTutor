@@ -8,6 +8,16 @@ export const getUserDecks = async(user_id) => { //variables needed: "user_id"
   return result;
 };
 
+export const getDeck = async(deck_id) => {
+  const result = await fetch(`/api/decks/${deck_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return result;
+}
+
 //variables needed: "deckName", "user_id", "format"
 //or: "deckName", "user_id", "versionToBe"++, "format", "deckCards" and "sideBoard" array minus "_id" for each card
 export const createDeck = async(deckData) => { 
