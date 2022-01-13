@@ -1,11 +1,28 @@
 import React from 'react';
-import './DeckFeed.css'
+import {useState, useEffect} from 'react'
+import {getDeck} from '../../utils/deckApi'
+import {useParams} from 'react-router-dom';
+import './DeckFeed.css';
 
 export default function DeckFeed() {
+  const {deck_id} = useParams
+  const [deckData, setDeckData]= useState()
+  
+  console.log(deck_id)
   // hover on card name and see image of card? or just clickable to show modal image of card?
+
+  const getDetails = async(deck_id) => {
+    let response = await getDeck(deck_id);
+    let deckData = await response.json()
+    setDeckData(deckData)
+  }
+
+  useEffect(() => {
+    getDetails(deck_id)
+  }, [])
   return (
-    <div className="container">
-      <h1>DeckName</h1>
+    <div>
+      <h1>{deckData.deckName}</h1>
       <div className='leftSideDeck'>
         <div>
           Format: renderFormatHere

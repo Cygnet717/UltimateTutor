@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import {Link} from 'react-router-dom';
 import {v4 as uuid} from 'uuid';
 import {Form, Button, Container, Row, Col} from 'react-bootstrap';
 import {AuthContext} from "../../context/AuthContext";
@@ -36,16 +37,21 @@ export default function DeskFeed() {
     const deck_id = e.currentTarget.dataset.deck_id
     const user_id = e.currentTarget.dataset.user_id
     console.log('refresh')
-    // try{
-    //   const response = await removeDeck(deck_id, user_id)
-    //   if (!response.ok) {
-    //     throw new Error('something went wrong!');
-    //   }
-    //   const deleted = await response.json()
-    //   console.log(deleted)
-    // }catch(err){
-    //   console.error(err)
-    // }
+    try{
+      const response = await removeDeck(deck_id, user_id)
+      if (!response.ok) {
+        throw new Error('something went wrong!');
+      }
+      const deleted = await response.json()
+      console.log(deleted)
+    }catch(err){
+      console.error(err)
+    }
+  }
+
+  const showDeckList = (id) => {
+    console.log(id)
+    //window.location.assign(`/deckList/:${_id}`)
   }
 
   return (
@@ -57,10 +63,10 @@ export default function DeskFeed() {
           <Container className='singleDeck' key={uuid()}>
             <Col>
               <Container >
-                  <Col>{deck.deckName}</Col>
+                  <Col onCLick={() => showDeckList(deck._id)}>{deck.deckName}</Col>
                   <Col>Card Count: {deck.deckCards.length}</Col>
                   <Col>Side Board: {deck.sideBoard.length}</Col>
-                  <Col>Version: {deck.versionToBe -1}</Col>
+                  {/* <Col>Version: {deck.versionToBe -1} <button>Save Version</button></Col> --simplify MVP*/}
               </Container>
               <Container>
                   <Col>Date Created: {date}</Col>
