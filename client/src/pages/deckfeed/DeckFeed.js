@@ -1,10 +1,11 @@
 import React from 'react';
 import './DeckFeed.css'
 
-export default function DeckFeed() {
+export default function DeckFeed(props) {
+  console.log(props)
   // hover on card name and see image of card? or just clickable to show modal image of card?
   return (
-    <div className="container">
+    <div>
       <h1>DeckName</h1>
       <div className='leftSideDeck'>
         <div>
