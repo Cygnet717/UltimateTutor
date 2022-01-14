@@ -1,6 +1,5 @@
 import React from 'react';
 import {useState, useEffect, useContext} from 'react'
-// import {getDeck} from '../../utils/deckApi'
 import {AuthContext} from "../../context/AuthContext"
 import {useParams} from 'react-router-dom';
 import './DeckFeed.css';
