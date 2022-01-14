@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 import {v4 as uuid} from 'uuid';
 import {Form, Button, Container, Row, Col} from 'react-bootstrap';
 import {AuthContext} from "../../context/AuthContext";
@@ -51,7 +51,7 @@ export default function DeskFeed() {
 
   const showDeckList = (id) => {
     console.log(id)
-    //window.location.assign(`/deckList/:${_id}`)
+    window.location.assign(`/deckList/${id}`)
   }
 
   return (
@@ -63,7 +63,7 @@ export default function DeskFeed() {
           <Container className='singleDeck' key={uuid()}>
             <Col>
               <Container >
-                  <Col onCLick={() => showDeckList(deck._id)}>{deck.deckName}</Col>
+                  <Col onClick={() => showDeckList(deck._id)}>{deck.deckName}</Col>
                   <Col>Card Count: {deck.deckCards.length}</Col>
                   <Col>Side Board: {deck.sideBoard.length}</Col>
                   {/* <Col>Version: {deck.versionToBe -1} <button>Save Version</button></Col> --simplify MVP*/}
