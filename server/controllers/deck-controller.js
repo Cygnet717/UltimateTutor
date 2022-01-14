@@ -16,18 +16,6 @@ module.exports = {
     }
   },
 
-  async getDeck(req, res) { // send "deck_id" in body
-    try{
-      const foundDeck = await Deck.findOne(
-        {_id: req.params.deck_id}
-      )
-        console.log(foundDeck)
-      res.json(foundDeck);
-    } catch (err){
-      res.status(400).json(err)
-    }
-  },
-
   //make new deck
       // send "deckName", "user_id", "format"
   //or to make new version

@@ -22,7 +22,7 @@ function App() {
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/friends" element={<Friends/>}/>
           <Route exact path="/desk" element={<Desk/>}/>
-          <Route path="/desk/deckList/:deck_id" element={<DeckFeed/>}/>
+          <Route path="/deckList/:deck_id" element={<DeckFeed/>}/>
         </Routes>
       </AuthProvider>
     </Router>

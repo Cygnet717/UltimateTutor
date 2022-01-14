@@ -1,41 +1,73 @@
 import React from 'react';
-import {useState, useEffect} from 'react'
-import {getDeck} from '../../utils/deckApi'
+import {useState, useEffect, useContext} from 'react'
+import {AuthContext} from "../../context/AuthContext"
 import {useParams} from 'react-router-dom';
 import './DeckFeed.css';
 
 export default function DeckFeed() {
-  const {deck_id} = useParams
+  const {deck_id} = useParams()
+  const {userDecks} = useContext(AuthContext)
   const [deckData, setDeckData]= useState()
-  
-  console.log(deck_id)
+  const [sortedCards, setSortedCards]= useState()
   // hover on card name and see image of card? or just clickable to show modal image of card?
 
   const getDetails = async(deck_id) => {
-    let response = await getDeck(deck_id);
-    let deckData = await response.json()
-    setDeckData(deckData)
+    const currentDeck = userDecks.find(deck => deck._id === deck_id)
+    if(currentDeck){
+      let deckCreatures = [];
+      let deckLands = [];
+      let deckInstants = [];
+      for(let i=0; i<currentDeck.deckCards.length; i++){
+        switch(currentDeck.deckCards[i].cardType) {
+          case "creature":
+            deckCreatures.push(currentDeck.deckCards[i])
+            break;
+          case 'land':
+            deckLands.push(currentDeck.deckCards[i])
+            break;
+          case 'instant':
+            deckInstants.push(currentDeck.deckCards[i])
+            break;
+          default:
+            // code block
+        }
+      }
+      setSortedCards({creatures: deckCreatures, lands:deckLands, instants:deckInstants})
+      console.log(sortedCards)
+      setDeckData(currentDeck)
+    }
+   
   }
 
   useEffect(() => {
     getDetails(deck_id)
-  }, [])
+  }, [userDecks])
   return (
     <div>
+      {deckData? 
+      <>
       <h1>{deckData.deckName}</h1>
       <div className='leftSideDeck'>
         <div>
-          Format: renderFormatHere
+          Format: {deckData.format}
         </div>
         <div>
           Commander: if applicable
         </div>
-        <div>
-          Version: <button>Save this Version</button> or Version#
-        </div>
+        {/* <div>
+          {deckData.versionToBe?
+            <>
+            Version When Saved: {deckData.versionToBe}
+            </>
+            :
+            <>
+            Version: {deckData.version}
+            </>
+          } 
+        </div> 
         <div>
           (if versioned) Wins/Losses:  3W/4L
-        </div>
+        </div> removed to narrow mvp scope  */}
       </div>
       <div className='rightSideDeck'>
         <h3>Deck List</h3>
@@ -88,6 +120,11 @@ export default function DeckFeed() {
           </ul>
         </div>
       </div>
+      </> 
+        : 
+        <></>
+      }
+      
     </div>
   )
 }
