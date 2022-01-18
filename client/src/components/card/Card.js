@@ -1,11 +1,15 @@
 import React from 'react';
 import './Card.css'
+import { addCardToDeck } from '../../utils/deckApi';
 import cardImage from '../../images/Magic_card_back.jpg'
 
 export default function Card(props) {
   let frontSideImage = cardImage;
   let backSideImage = cardImage;
   let isDoubleSided = false;
+
+  let selectedDeckId = 0;
+
   if(props.cardData){
     if(props.cardData.image_uris){
       frontSideImage = props.cardData.image_uris.small
@@ -24,6 +28,17 @@ export default function Card(props) {
       e.currentTarget.src = frontSideImage
     }
   }
+
+  const handleChangeSelected = async(event) => {
+    selectedDeckId = event.target.value
+  }
+
+  const handleAddToDeck = async(event, cardData) => {
+    event.preventDefault()
+    console.log(cardData)
+    // addCardToDeck(selectedDeckId)
+  }
+
   return (
     <div className="singleCard">
       <p>{props.cardData? props.cardData.name : "Card Name"}</p>
@@ -33,14 +48,14 @@ export default function Card(props) {
         <img className='cardImage' alt={props.cardData? props.cardData.name : "Card Name"} src={frontSideImage}/>
       }
       {props.loggedIn ? 
-        <form>
-          <select>
+        <form onSubmit={(e) => handleAddToDeck(e, props.cardData)}>
+          <select onChange={handleChangeSelected}>
             <option>Pick Deck</option>
-            <option>deck 1</option>
-            <option>deck 2</option>
-            <option>deck 3</option>
+            {props.deckData.map( deck =>
+              <option value={deck._id} key={deck._id}>{deck.deckName}</option>
+            )}
           </select>
-          <button>Add</button>
+          <button type='submit'>Add</button>
         </form>
         :
         <>Login to build decks</>

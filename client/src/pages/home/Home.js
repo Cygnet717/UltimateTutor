@@ -9,7 +9,7 @@ export default function Home() {
   const [advSearch, setAdvSearch] = useState(false)
   const [searchFormData, setSearchFormData] = useState({color: '%3A'}) //'%3A' Percent-encoding for ':'
   const [searchResults, setSearchResults] = useState(false)
-  const {user} = useContext(AuthContext)
+  const {user, userDecks} = useContext(AuthContext)
   const loggedIn = user.data.username ==='default'? false: true
 
   const handleInputChange = (event) => {
@@ -62,8 +62,9 @@ export default function Home() {
       cardResults = await response.json();
       setSearchResults(cardResults);
     }
-    
   }
+
+  
   
   return (
     <>
@@ -128,14 +129,14 @@ export default function Home() {
       
       {searchResults.data?
         <>{searchResults.data.map(card => 
-          <Card cardData={card} loggedIn={loggedIn} key={card.id}/>
+          <Card cardData={card} loggedIn={loggedIn} deckData={userDecks} key={card.id}/>
         )}</>
         :
         <>
-          <Card loggedIn={loggedIn}/>
-          <Card loggedIn={loggedIn}/>
-          <Card loggedIn={loggedIn}/>
-          <Card loggedIn={loggedIn}/>
+          <Card loggedIn={loggedIn} deckData={userDecks}/>
+          <Card loggedIn={loggedIn} deckData={userDecks}/>
+          <Card loggedIn={loggedIn} deckData={userDecks}/>
+          <Card loggedIn={loggedIn} deckData={userDecks}/>
         </>
       }
   
