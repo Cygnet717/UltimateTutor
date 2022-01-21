@@ -11,7 +11,6 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState(false)
   const {user, userDecks} = useContext(AuthContext)
   const loggedIn = user.data.username ==='default'? false: true
-  console.log(searchResults)
 
   const handleInputChange = (event) => {
     const {name, value} = event.target;

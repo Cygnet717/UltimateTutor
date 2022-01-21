@@ -40,12 +40,13 @@ export default function Card(props) {
   const getCardType = (type_line) => {
     const types = ['Creature', 'Instant', 'Sorcery', 'Enchantment', 'Land', 'Planeswalker', 'Artifact']
     let cardType =''
-    let cycleCount = 0
-      if(cardType === ''){
-        type_line.includes(types[cycleCount])? cardType = types[cycleCount] : cycleCount++
-      }
-      
-    
+
+    for(let i=0; i<types.length; i++){
+        if(type_line.includes(types[i])){
+          cardType = types[i];
+          break;  //controlling for Artifact Creatures and Enchantment Creatures and exiting when type is matched
+        }
+    }
     return cardType
   }
 
@@ -61,13 +62,13 @@ export default function Card(props) {
       commander: false,
       sideBoard: isSideboard
     }
-    // const updatedDeck = await addCardToDeck(newCardData)
-    // const response = await getUserDecks(user.data._id)
-    // const result = await response.json()
-    // console.log(result)
-    // setUserDecks(result)
-    // console.log(`adding ${newCardData.cardName} to ${newCardData.deck_id}`)
-    // //flash added confirmation "cardname added to deckname"
+    const updatedDeck = await addCardToDeck(newCardData)
+    const response = await getUserDecks(user.data._id)
+    const result = await response.json()
+    console.log(result)
+    setUserDecks(result)
+    console.log(`adding ${newCardData.cardName} to ${newCardData.deck_id}`)
+    //flash added confirmation "cardname added to deckname"
   }
 
   const handleSideboardCheck = () => {
