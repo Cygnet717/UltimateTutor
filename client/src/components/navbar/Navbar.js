@@ -1,15 +1,21 @@
 import React, { useContext } from 'react';
 import {Link} from 'react-router-dom';
+import Auth from '../../utils/auth';
 import {AuthContext} from "../../context/AuthContext"
 import './Navbar.css'
 
 export default function Navbar() {
   const {user} = useContext(AuthContext)
 
+  const handleLogout = () => {
+    Auth.logout()
+  }
   
   return (
     <div className='header'>
-      <h1 className='pageName'>Ultimate Tutor</h1>
+      <Link to='/'>
+        <h1 className='pageName'>Ultimate Tutor</h1>
+      </Link>
       {user.data.username ==='default'? 
             (<h4>Please log in</h4>)
             :
@@ -21,7 +27,7 @@ export default function Navbar() {
             <>
               <Link to="desk">My Desk</Link>
               <Link to="friends">Friends</Link>
-              <Link to='/'>LogOut</Link>
+              <a onClick={handleLogout}>LogOut</a>
             </>
           ) : (
             <>
