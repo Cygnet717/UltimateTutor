@@ -33,8 +33,10 @@ export default function DeckFeed() {
         }
       }
       setSortedCards({creatures: deckCreatures, lands:deckLands, instants:deckInstants})
-      console.log(sortedCards)
       setDeckData(currentDeck)
+      console.log(currentDeck)
+      console.log(sortedCards)
+
     }
    
   }

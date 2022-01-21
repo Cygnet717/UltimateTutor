@@ -37,23 +37,37 @@ export default function Card(props) {
     selectedDeckId = event.target.value
   }
 
+  const getCardType = (type_line) => {
+    const types = ['Creature', 'Instant', 'Sorcery', 'Enchantment', 'Land', 'Planeswalker', 'Artifact']
+    let cardType =''
+    let cycleCount = 0
+      if(cardType === ''){
+        type_line.includes(types[cycleCount])? cardType = types[cycleCount] : cycleCount++
+      }
+      
+    
+    return cardType
+  }
+
   const handleAddToDeck = async(event, cardData) => {
     event.preventDefault()
+    const finalType = await getCardType(cardData.type_line)
+    console.log(finalType)
     let newCardData = {
       cardName: cardData.name,
       deck_id: selectedDeckId,//image
       image: {front: frontSideImage, back: backSideImage},
-      cardType: cardData.type_line,
+      cardType: finalType,
       commander: false,
       sideBoard: isSideboard
     }
-    const updatedDeck = await addCardToDeck(newCardData)
-    const response = await getUserDecks(user.data._id)
-    const result = await response.json()
-    console.log(result)
-    setUserDecks(result)
-    console.log(`adding ${newCardData.cardName} to ${newCardData.deck_id}`)
-    //flash added confirmation "cardname added to deckname"
+    // const updatedDeck = await addCardToDeck(newCardData)
+    // const response = await getUserDecks(user.data._id)
+    // const result = await response.json()
+    // console.log(result)
+    // setUserDecks(result)
+    // console.log(`adding ${newCardData.cardName} to ${newCardData.deck_id}`)
+    // //flash added confirmation "cardname added to deckname"
   }
 
   const handleSideboardCheck = () => {

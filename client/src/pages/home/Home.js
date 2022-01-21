@@ -11,6 +11,7 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState(false)
   const {user, userDecks} = useContext(AuthContext)
   const loggedIn = user.data.username ==='default'? false: true
+  console.log(searchResults)
 
   const handleInputChange = (event) => {
     const {name, value} = event.target;
@@ -50,7 +51,7 @@ export default function Home() {
     if(searchFormData.cardName){
       response = await scryfallNamedSearch(searchFormData.cardName);
       cardResults = await response.json();
-      setSearchResults(cardResults)
+      setSearchResults({data: [{...cardResults}]})
     } else {
       let query = '';
       if(searchFormData.color.length > 3){
@@ -63,7 +64,6 @@ export default function Home() {
       cardResults = await response.json();
       setSearchResults(cardResults);
     }
-
     
   }
 

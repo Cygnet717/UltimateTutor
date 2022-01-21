@@ -5,5 +5,8 @@ export const scryfallSearch = async(searchParams) => {
 }
 
 export const scryfallNamedSearch = async(searchName) => {
-  const resutl = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${searchName}`)
+  console.log(`https://api.scryfall.com/cards/named?fuzzy=${searchName}`)
+  const result = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${searchName}`)
+
+  return result;
 }
