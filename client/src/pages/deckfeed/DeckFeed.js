@@ -2,39 +2,65 @@ import React from 'react';
 import {useState, useEffect, useContext} from 'react'
 import {AuthContext} from "../../context/AuthContext"
 import {useParams} from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import './DeckFeed.css';
 
 export default function DeckFeed() {
   const {deck_id} = useParams()
   const {userDecks} = useContext(AuthContext)
   const [deckData, setDeckData]= useState()
-  const [sortedCards, setSortedCards]= useState()
+  const [sortedCards, setSortedCards]= useState([{Creatures: []}, {Instants: []}, {Sorceries:[]}, {Enchantments: []}, {Lands: []}, {Planeswalkers: []}, {Artifacts: []}])
   // hover on card name and see image of card? or just clickable to show modal image of card?
 
   const getDetails = async(deck_id) => {
     const currentDeck = userDecks.find(deck => deck._id === deck_id)
-    if(currentDeck){
+    if(currentDeck){  //['Creature', 'Instant', 'Sorcery', 'Enchantment', 'Land', 'Planeswalker', 'Artifact']
       let deckCreatures = [];
-      let deckLands = [];
       let deckInstants = [];
+      let deckSorceries = [];
+      let deckEnchantments = [];
+      let deckLands = [];
+      let deckPlaneswalkers = [];
+      let deckArtifacts = [];
+
       for(let i=0; i<currentDeck.deckCards.length; i++){
         switch(currentDeck.deckCards[i].cardType) {
-          case "creature":
+          case "Creature":
             deckCreatures.push(currentDeck.deckCards[i])
             break;
-          case 'land':
-            deckLands.push(currentDeck.deckCards[i])
-            break;
-          case 'instant':
+          case 'Instant':
             deckInstants.push(currentDeck.deckCards[i])
             break;
+          case 'Sorcery':
+            deckSorceries.push(currentDeck.deckCards[i])
+            break;
+          case 'Enchantment':
+            deckEnchantments.push(currentDeck.deckCards[i])
+            break;
+          case 'Land':
+            deckLands.push(currentDeck.deckCards[i])
+            break;
+          case 'Planeswalker':
+            deckPlaneswalkers.push(currentDeck.deckCards[i])
+            break;
+          case 'Artifact':
+            deckArtifacts.push(currentDeck.deckCards[i])
+            break;
           default:
-            // code block
+            break;
         }
       }
-      setSortedCards({creatures: deckCreatures, lands:deckLands, instants:deckInstants})
-      console.log(sortedCards)
+      setSortedCards([
+        {Creatures: deckCreatures}, 
+        {Instants: deckInstants}, 
+        {Sorceries: deckSorceries},
+        {Enchantments: deckEnchantments},
+        {Lands: deckLands},
+        {Planeswalkers: deckPlaneswalkers},
+        {Artifacts: deckArtifacts}
+      ])
       setDeckData(currentDeck)
+
     }
    
   }
@@ -71,54 +97,23 @@ export default function DeckFeed() {
       </div>
       <div className='rightSideDeck'>
         <h3>Deck List</h3>
-        <div> 
-          <h4>Creatures (number)</h4>
-          <ul>
-            <li>Card Name -- colors</li>
-            <li>Card Name -- colors</li>
-            <li>Card Name -- colors</li>
-          </ul>
-        </div>
-        <div>
-          <h4>Sorcery (number)</h4>
-          <ul>
-            <li>Card Name -- colors</li>
-            <li>Card Name -- colors</li>
-            <li>Card Name -- colors</li>
-          </ul>
-        </div>
-        <div>
-          <h4>Instant (number)</h4>
-          <ul>
-            <li>Card Name -- colors</li>
-            <li>Card Name -- colors</li>
-            <li>Card Name -- colors</li>
-          </ul>
-        </div>
-        <div>
-          <h4>Enchantment (number)</h4>
-          <ul>
-            <li>Card Name -- colors</li>
-            <li>Card Name -- colors</li>
-            <li>Card Name -- colors</li>
-          </ul>
-        </div>
-        <div>
-          <h4>Land (number)</h4>
-          <ul>
-            <li>Card Name -- colors</li>
-            <li>Card Name -- colors</li>
-            <li>Card Name -- colors</li>
-          </ul>
-        </div>
-        <div>
-          <h4>Sideboard (number)</h4>
-          <ul>
-            <li>Card Name -- colors</li>
-            <li>Card Name -- colors</li>
-            <li>Card Name -- colors</li>
-          </ul>
-        </div>
+        {sortedCards.map(type => {
+          if(Object.values(type)[0].length > 0){
+            return(
+              <div key={uuidv4}> 
+                <h4> {Object.keys(type)[0]} ({Object.values(type)[0].length})</h4>
+                <ul>
+                  {Object.values(type)[0].map(card => 
+                    <li key={uuidv4}>{card.cardName}</li>
+                  )}
+                </ul>
+              </div>
+            )
+
+          }
+
+        })}
+        
       </div>
       </> 
         : 

@@ -45,11 +45,12 @@ export default function Home() {
     event.preventDefault();
     let response;
     let cardResults;
-
+    console.log("thinking")
+    //start thinking gif
     if(searchFormData.cardName){
       response = await scryfallNamedSearch(searchFormData.cardName);
       cardResults = await response.json();
-      setSearchResults(cardResults)
+      setSearchResults({data: [{...cardResults}]})
     } else {
       let query = '';
       if(searchFormData.color.length > 3){
@@ -62,6 +63,7 @@ export default function Home() {
       cardResults = await response.json();
       setSearchResults(cardResults);
     }
+    
   }
 
   
@@ -133,10 +135,7 @@ export default function Home() {
         )}</>
         :
         <>
-          <Card loggedIn={loggedIn} deckData={userDecks}/>
-          <Card loggedIn={loggedIn} deckData={userDecks}/>
-          <Card loggedIn={loggedIn} deckData={userDecks}/>
-          <Card loggedIn={loggedIn} deckData={userDecks}/>
+          Results Area
         </>
       }
   

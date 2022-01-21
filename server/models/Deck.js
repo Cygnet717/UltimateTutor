@@ -19,13 +19,19 @@ const deckschema = new Schema(
     },
     deckCards: [{
       cardName: String,
-      image: String,
+      image: {
+        front: String,
+        back: String
+      },
       cardType: String,
       commander: Boolean
     }],
     sideBoard: [{
       cardName: String,
-      image: String,
+      image:  {
+        front: String,
+        back: String
+      },
       cardType: String
     }],
     wins: {
