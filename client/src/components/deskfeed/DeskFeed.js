@@ -1,17 +1,15 @@
 import React, { useContext, useState } from 'react';
 // import {Link} from 'react-router-dom';
-import {v4 as uuid} from 'uuid';
-import {Form, Button, Container, Row, Col} from 'react-bootstrap';
-import {AuthContext} from "../../context/AuthContext";
-import {createDeck, removeDeck} from '../../utils/deckApi';
+import { v4 as uuid } from 'uuid';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { AuthContext } from "../../context/AuthContext";
+import { createDeck, removeDeck } from '../../utils/deckApi';
 import bin from '../../images/bin.png'
 import './DeskFeed.css';
 
 export default function DeskFeed() {
-  const {user} = useContext(AuthContext)
-  const {userDecks} = useContext(AuthContext)
-  const [newDeckData, setNewDeckData] = useState()
-  console.log(userDecks)
+  const { user, userDecks, checkForDecks } = useContext(AuthContext)
+  const [ newDeckData, setNewDeckData ] = useState()
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -19,6 +17,7 @@ export default function DeskFeed() {
   };
 
   const createNewDeck = async (e) => {
+    e.preventDefault()
     try{
       const response = await createDeck(newDeckData)
 
@@ -26,7 +25,7 @@ export default function DeskFeed() {
         throw new Error('something went wrong!');
       }
       const newDeck = await response.json()
-      console.log(newDeck)
+    checkForDecks()
     } catch (err){
       console.error(err)
     }
@@ -36,14 +35,14 @@ export default function DeskFeed() {
   const startDeleteDeck = async (e) => {
     const deck_id = e.currentTarget.dataset.deck_id
     const user_id = e.currentTarget.dataset.user_id
-    console.log('refresh')
     try{
       const response = await removeDeck(deck_id, user_id)
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
       const deleted = await response.json()
-      console.log(deleted)
+      checkForDecks()
+
     }catch(err){
       console.error(err)
     }
@@ -98,9 +97,9 @@ export default function DeskFeed() {
                 <Form.Group className="mb-3">
                   <Form.Select id="Format" name="format" onChange={handleInputChange}>
                     <option>Select Format</option>
-                    <option value='standard'>Standard</option>
-                    <option value='commander'>Commander</option>
-                    <option value='historic'>Historic</option>
+                    <option value='Standard'>Standard</option>
+                    <option value='Commander'>Commander</option>
+                    <option value='Historic'>Historic</option>
                   </Form.Select>
                 </Form.Group>
               </Col>
