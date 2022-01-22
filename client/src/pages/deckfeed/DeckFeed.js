@@ -2,6 +2,7 @@ import React from 'react';
 import {useState, useEffect, useContext} from 'react'
 import {AuthContext} from "../../context/AuthContext"
 import {useParams} from 'react-router-dom';
+import cardImage from '../../images/Magic_card_back.jpg'
 import { v4 as uuidv4 } from 'uuid';
 import './DeckFeed.css';
 
@@ -10,6 +11,7 @@ export default function DeckFeed() {
   const {userDecks} = useContext(AuthContext)
   const [deckData, setDeckData]= useState()
   const [sortedCards, setSortedCards]= useState([{Creatures: []}, {Instants: []}, {Sorceries:[]}, {Enchantments: []}, {Lands: []}, {Planeswalkers: []}, {Artifacts: []}])
+  const [displayedCard, setDisplayedCard] = useState(cardImage)
   // hover on card name and see image of card? or just clickable to show modal image of card?
 
   const getDetails = async(deck_id) => {
@@ -69,11 +71,11 @@ export default function DeckFeed() {
     getDetails(deck_id)
   }, [userDecks])
   return (
-    <div>
+    <div id='deckListContainer'>
       {deckData? 
       <>
-      <h1>{deckData.deckName}</h1>
       <div className='leftSideDeck'>
+        <h1>{deckData.deckName}</h1>
         <div>
           Format: {deckData.format}
         </div>
@@ -94,9 +96,9 @@ export default function DeckFeed() {
         <div>
           (if versioned) Wins/Losses:  3W/4L
         </div> removed to narrow mvp scope  */}
+        <img id='displayedCard' src={displayedCard} alt='current card' />
       </div>
       <div className='rightSideDeck'>
-        <h3>Deck List</h3>
         {sortedCards.map(type => {
           if(Object.values(type)[0].length > 0){
             return(
@@ -104,7 +106,7 @@ export default function DeckFeed() {
                 <h4> {Object.keys(type)[0]} ({Object.values(type)[0].length})</h4>
                 <ul>
                   {Object.values(type)[0].map(card => 
-                    <li key={uuidv4}>{card.cardName}</li>
+                    <li key={uuidv4} onMouseOver={() => setDisplayedCard(card.image.front)}>{card.cardName}</li>
                   )}
                 </ul>
               </div>

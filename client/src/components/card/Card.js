@@ -16,11 +16,11 @@ export default function Card(props) {
 
   if(props.cardData){
     if(props.cardData.image_uris){
-      frontSideImage = props.cardData.image_uris.small
+      frontSideImage = props.cardData.image_uris.normal
     }else{
       isDoubleSided = true;
-      frontSideImage = props.cardData.card_faces[0].image_uris.small;
-      backSideImage = props.cardData.card_faces[1].image_uris.small;
+      frontSideImage = props.cardData.card_faces[0].image_uris.normal;
+      backSideImage = props.cardData.card_faces[1].image_uris.normal;
     }
   }
 

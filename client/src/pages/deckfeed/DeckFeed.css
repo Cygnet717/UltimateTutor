@@ -1,0 +1,16 @@
+#deckListContainer {
+  display: flex;
+}
+
+.rightSideDeck {
+  outline: 1px solid red;
+  display: flex;
+}
+
+.leftSideDeck {
+  outline: 1px solid purple;
+}
+
+#displayedCard {
+  height: 300px;
+}
