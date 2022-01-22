@@ -16,6 +16,9 @@ export default function DeckFeed() {
 
   const getDetails = async(deck_id) => {
     const currentDeck = userDecks.find(deck => deck._id === deck_id)
+    if(currentDeck.format === 'Comander'){
+      console.log('its a commander')
+    }
     if(currentDeck){  //['Creature', 'Instant', 'Sorcery', 'Enchantment', 'Land', 'Planeswalker', 'Artifact']
       let deckCreatures = [];
       let deckInstants = [];
@@ -111,17 +114,13 @@ export default function DeckFeed() {
                 </ul>
               </div>
             )
-
           }
-
         })}
-        
       </div>
       </> 
         : 
         <></>
       }
-      
     </div>
   )
 }
