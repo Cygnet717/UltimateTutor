@@ -69,7 +69,7 @@ export default function DeskFeed() {
               </Container>
               <Container>
                   <Col>Date Created: {date}</Col>
-                  {deck.format === 'commander'?
+                  {deck.format === 'Commander'?
                     (
                       <Col>Commander: {commander? commander.cardName : '--'}</Col>
                     ):(
