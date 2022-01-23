@@ -12,12 +12,14 @@ export default function DeckFeed() {
   const [deckData, setDeckData]= useState()
   const [sortedCards, setSortedCards]= useState([{Creatures: []}, {Instants: []}, {Sorceries:[]}, {Enchantments: []}, {Lands: []}, {Planeswalkers: []}, {Artifacts: []}])
   const [displayedCard, setDisplayedCard] = useState(cardImage)
-  // hover on card name and see image of card? or just clickable to show modal image of card?
+  let commanderCard;
 
   const getDetails = async(deck_id) => {
     const currentDeck = userDecks.find(deck => deck._id === deck_id)
     if(currentDeck.format === 'Comander'){
       console.log('its a commander')
+      commanderCard = currentDeck.deckCards.find(card => card.commander )
+      console.log(commanderCard)
     }
     if(currentDeck){  //['Creature', 'Instant', 'Sorcery', 'Enchantment', 'Land', 'Planeswalker', 'Artifact']
       let deckCreatures = [];
@@ -79,12 +81,24 @@ export default function DeckFeed() {
       <>
       <div className='leftSideDeck'>
         <h1>{deckData.deckName}</h1>
-        <div>
-          Format: {deckData.format}
-        </div>
-        <div>
-          Commander: if applicable
-        </div>
+        
+        {deckData.format === 'Commander'?
+          <div>
+            Commander: {
+              commanderCard.cardName ? 
+              commanderCard.cardName 
+              : 
+              <select>
+                
+              </select>
+              }
+          </div>
+          :
+          <div>
+            Format: {deckData.format}
+          </div>
+        }
+        
         {/* <div>
           {deckData.versionToBe?
             <>

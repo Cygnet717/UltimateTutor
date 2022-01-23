@@ -5,6 +5,8 @@
 .rightSideDeck {
   outline: 1px solid red;
   display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .leftSideDeck {
