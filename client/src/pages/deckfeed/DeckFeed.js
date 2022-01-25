@@ -15,10 +15,8 @@ export default function DeckFeed() {
   const [displayedCard, setDisplayedCard] = useState(cardImage)
   let commanderCard;
 
-  if(deckData.format === 'Comander'){
-    console.log('its a commander')
+  if(deckData){
     commanderCard = deckData.deckCards.find(card => card.commander )
-    console.log(commanderCard)
   }
 
   const getDetails = async(deck_id) => {
@@ -72,7 +70,6 @@ export default function DeckFeed() {
       setDeckData(currentDeck)
     }
 
-
   }
 
   const handleCommanderSelect = (event) => {
@@ -81,11 +78,19 @@ export default function DeckFeed() {
       card_id: event.target.value,
       commander: true
     }
-    toggleCommander(commanderData)
+    // toggleCommander(commanderData)
+    console.log(event.currentTarget.dataset.image)
+    // setDisplayedCard(event.currentTarget.dataset.image)
   }
 
   useEffect(() => {
     getDetails(deck_id)
+    if(deckData){
+      commanderCard = deckData.deckCards.find(card => card.commander )
+    }
+    console.log(commanderCard)
+    commanderCard ? setDisplayedCard(commanderCard.image.front): console.log('no commander')
+
   }, [userDecks])
   return (
     <div id='deckListContainer'>
@@ -103,7 +108,7 @@ export default function DeckFeed() {
               <select onChange={handleCommanderSelect}>
                 <option>select a commander</option>
                  {deckData.deckCards.map(card => 
-                   <option key={uuidv4()} value={card._id}>{card.cardName}</option>
+                   <option key={uuidv4()} data-image={card.image.front} value={card._id}>{card.cardName}</option>
                  )}
               </select>
               }
@@ -138,7 +143,7 @@ export default function DeckFeed() {
                 <h4> {Object.keys(type)[0]} ({Object.values(type)[0].length})</h4>
                 <ul>
                   {Object.values(type)[0].map(card => 
-                    <li key={uuidv4()} onMouseOver={() => setDisplayedCard(card.image.front)}>{card.cardName}</li>
+                    <li key={uuidv4()} onMouseOver={() => setDisplayedCard(card.image.front)} onMouseLeave={() => setDisplayedCard(commanderCard.image.front)}>{card.cardName}</li>
                   )}
                 </ul>
               </div>
