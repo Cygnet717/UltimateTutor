@@ -12,7 +12,6 @@ export default function Card(props) {
   let backSideImage = cardImage;
   let isDoubleSided = false;
   let isSideboard = false;
-  let selectedDeckId = 0;
 
   if(props.cardData){
     if(props.cardData.image_uris){
@@ -34,7 +33,7 @@ export default function Card(props) {
   }
 
   const handleChangeSelected = async(event) => {
-    selectedDeckId = event.target.value
+    props.setConstructingDeck(event.target.value)
   }
 
   const getCardType = (type_line) => {
@@ -56,7 +55,7 @@ export default function Card(props) {
     console.log(finalType)
     let newCardData = {
       cardName: cardData.name,
-      deck_id: selectedDeckId,//image
+      deck_id: props.constructingDeck,//image
       image: {front: frontSideImage, back: backSideImage},
       cardType: finalType,
       commander: false,
@@ -85,7 +84,7 @@ export default function Card(props) {
       }
       {props.loggedIn ? 
         <form onSubmit={(e) => handleAddToDeck(e, props.cardData)}>
-          <select onChange={handleChangeSelected}>
+          <select onChange={handleChangeSelected} value={props.constructingDeck}>
             <option>Pick Deck</option>
             {props.deckData.map( deck =>
               <option value={deck._id} key={deck._id}>{deck.deckName}</option>
