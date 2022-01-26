@@ -1,18 +1,20 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {AuthContext} from '../../context/AuthContext';
-import './Card.css'
+import Alert from 'react-bootstrap/Alert';
 import { addCardToDeck, getUserDecks } from '../../utils/deckApi';
-import cardImage from '../../images/Magic_card_back.jpg'
+import cardImage from '../../images/Magic_card_back.jpg';
+import './Card.css';
 
 
 export default function Card(props) {
   const {setUserDecks, user} = useContext(AuthContext)
+  const [showConf, setShowConf] = useState(false)
+  const [currentDeck, setCurrentDeck] = useState()
 
   let frontSideImage = cardImage;
   let backSideImage = cardImage;
   let isDoubleSided = false;
   let isSideboard = false;
-  let selectedDeckId = 0;
 
   if(props.cardData){
     if(props.cardData.image_uris){
@@ -34,7 +36,8 @@ export default function Card(props) {
   }
 
   const handleChangeSelected = async(event) => {
-    selectedDeckId = event.target.value
+    props.setConstructingDeck(event.target.value)
+    setCurrentDeck(event.target[event.target.selectedIndex].getAttribute('data-deckName'))
   }
 
   const getCardType = (type_line) => {
@@ -56,7 +59,7 @@ export default function Card(props) {
     console.log(finalType)
     let newCardData = {
       cardName: cardData.name,
-      deck_id: selectedDeckId,//image
+      deck_id: props.constructingDeck,//image
       image: {front: frontSideImage, back: backSideImage},
       cardType: finalType,
       commander: false,
@@ -67,6 +70,7 @@ export default function Card(props) {
     const result = await response.json()
     console.log(result)
     setUserDecks(result)
+    setShowConf(true)
     console.log(`adding ${newCardData.cardName} to ${newCardData.deck_id}`)
     //flash added confirmation "cardname added to deckname"
   }
@@ -78,6 +82,12 @@ export default function Card(props) {
   return (
     <div className="singleCard">
       <p>{props.cardData? props.cardData.name : "Card Name"}</p>
+      {showConf ? 
+        <Alert style={{position: 'absolute', marginTop: '25px'}} variant='success' onClose={() => setShowConf(false)} dismissible>{props.cardData.name} added to {currentDeck}</Alert>
+        :
+        <></>
+      }
+
       {isDoubleSided? 
         <img className='cardImage' alt={props.cardData? props.cardData.name : "Card Name"} src={frontSideImage} onClick={e => flipCard(e)}/>
         :
@@ -85,10 +95,10 @@ export default function Card(props) {
       }
       {props.loggedIn ? 
         <form onSubmit={(e) => handleAddToDeck(e, props.cardData)}>
-          <select onChange={handleChangeSelected}>
+          <select onChange={handleChangeSelected}  value={props.constructingDeck}>
             <option>Pick Deck</option>
             {props.deckData.map( deck =>
-              <option value={deck._id} key={deck._id}>{deck.deckName}</option>
+              <option value={deck._id} data-deckName={deck.deckName} key={deck._id}>{deck.deckName}</option>
             )}
           </select>
           <label htmlFor='sideboard'>

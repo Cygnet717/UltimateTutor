@@ -13,11 +13,9 @@ export default function DeckFeed() {
   const [deckData, setDeckData]= useState()
   const [sortedCards, setSortedCards]= useState([{Creatures: []}, {Instants: []}, {Sorceries:[]}, {Enchantments: []}, {Lands: []}, {Planeswalkers: []}, {Artifacts: []}])
   const [displayedCard, setDisplayedCard] = useState(cardImage)
-  let commanderCard;
+  const [commanderCard, setCommanderCard] = useState()
 
-  if(deckData){
-    commanderCard = deckData.deckCards.find(card => card.commander )
-  }
+
 
   const getDetails = async(deck_id) => {
     const currentDeck = userDecks.find(deck => deck._id === deck_id)
@@ -68,28 +66,31 @@ export default function DeckFeed() {
         {Artifacts: deckArtifacts}
       ])
       setDeckData(currentDeck)
+      const commCard = currentDeck.deckCards.find(card => card.commander)
+      if(commCard){
+        setCommanderCard(commCard)
+        setDisplayedCard(commCard.image.front)
+      }
+      
     }
 
   }
 
-  const handleCommanderSelect = (event) => {
+  const handleCommanderSelect = async (event) => {
     const commanderData = {
       deck_id: deckData._id,
       card_id: event.target.value,
       commander: true
     }
-    // toggleCommander(commanderData)
-    console.log(event.currentTarget.dataset.image)
-    // setDisplayedCard(event.currentTarget.dataset.image)
+    const selectedCard = event.target[event.target.selectedIndex]
+    const cardName = selectedCard.getAttribute('data-name')
+    toggleCommander(commanderData)
+    setCommanderCard({cardName})
+    setDisplayedCard(selectedCard.getAttribute('data-image'))
   }
 
   useEffect(() => {
     getDetails(deck_id)
-    if(deckData){
-      commanderCard = deckData.deckCards.find(card => card.commander )
-    }
-    console.log(commanderCard)
-    commanderCard ? setDisplayedCard(commanderCard.image.front): console.log('no commander')
 
   }, [userDecks])
   return (
@@ -108,7 +109,7 @@ export default function DeckFeed() {
               <select onChange={handleCommanderSelect}>
                 <option>select a commander</option>
                  {deckData.deckCards.map(card => 
-                   <option key={uuidv4()} data-image={card.image.front} value={card._id}>{card.cardName}</option>
+                   <option key={uuidv4()} data-image={card.image.front} data-name={card.cardName} value={card._id}>{card.cardName}</option>
                  )}
               </select>
               }
@@ -143,7 +144,7 @@ export default function DeckFeed() {
                 <h4> {Object.keys(type)[0]} ({Object.values(type)[0].length})</h4>
                 <ul>
                   {Object.values(type)[0].map(card => 
-                    <li key={uuidv4()} onMouseOver={() => setDisplayedCard(card.image.front)} onMouseLeave={() => setDisplayedCard(commanderCard.image.front)}>{card.cardName}</li>
+                    <li key={uuidv4()} onMouseOver={() => setDisplayedCard(card.image.front)} onMouseLeave={() => commanderCard? setDisplayedCard(commanderCard.image.front): console.log('no commander')}>{card.cardName}</li>
                   )}
                 </ul>
               </div>
