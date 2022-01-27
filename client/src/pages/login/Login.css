@@ -1,11 +1,17 @@
+
+
 .login-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: auto;
-    height: 50vh;
+    margin-top: 50px;
+    height: 40vh;
     width: 20%;
+    padding: 50px 60px 50px 60px;
+    /* border-radius: 20px; */
+    background-color: #434343;
 }
 
 .login-container form {
@@ -13,9 +19,48 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 120% !important;
+}
+
+.login-container input, .login-container input:focus{
+    border-radius: 0px !important;
+    box-shadow: none;
+    border: gray;
+    width: 100% !important;
 }
 
 .login-container Button {
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    width: 100%;
+    border-radius: 0px;
 }
+
+.btn:disabled {
+    position: relative;
+}
+
+.btn:disabled:hover {
+    pointer-events: all !important;
+    cursor: default;
+  }
+
+  .btn .tooltiptext {
+    opacity: 0;
+    width: 25ch;
+    background-color: rgba(255, 41, 41, 0.845);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    transition: all 0.3s linear;
+    position: absolute;
+    bottom: 30px;
+    left: -95px;
+    z-index: 1;
+  }
+
+  .btn:disabled:hover .tooltiptext {
+    opacity: 1.5;
+    transition-delay: .2s;
+  }
