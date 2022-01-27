@@ -1,4 +1,4 @@
-import Navbar from './components/navbar/Navbar';
+import Navtabs from './components/navbar/Navbar';
 import Desk from './pages/desk/Desk';
 import Friends from './pages/friends/Friends';
 import Home from './pages/home/Home';
@@ -15,7 +15,7 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <Navbar/>
+        <Navtabs/>
         <Routes>
           <Route exact path="/" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>
