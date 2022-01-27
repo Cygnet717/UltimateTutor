@@ -79,6 +79,7 @@ export default function Login() {
       </Button>
       <p>Dont have any account yet?</p>
       <a style={{margin: 'auto', color: 'black'}}href='/signup'>Sign Up</a>
+      {/* finish styling */}
     </Form>
   </div>
   )
