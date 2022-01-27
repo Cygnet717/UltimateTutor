@@ -47,8 +47,9 @@ export default function Login() {
     });
   };
   return (
-    <div className="login-page">
-      <div className="login-container">
+    <div className="login-container">
+        <div className="login-page"></div>
+        <h1>Login</h1>
         <Form noValidate validated={false} onSubmit={handleFormSubmit}>
           <Alert
             dismissible
@@ -98,12 +99,11 @@ export default function Login() {
             style={{ fontWeight: "300" }}
           >
             LOGIN
-            <span class="tooltiptext">You need to enter your info first</span>
           </Button>
-          <p style={{ color: "white", fontSize: '13px' }}>
+          <p style={{ color: "white", fontSize: '14px' }}>
             Not registered? &nbsp;
             <a
-              style={{ color: "pink", textDecoration: "none" }}
+              style={{ color: "#198754", textDecoration: "none" }}
               href="/signup"
             >
               Create an account
@@ -111,6 +111,5 @@ export default function Login() {
           </p>
         </Form>
       </div>
-    </div>
   );
 }
