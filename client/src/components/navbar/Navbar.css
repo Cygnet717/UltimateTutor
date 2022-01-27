@@ -1,3 +1,30 @@
+.navbar {
+  padding: 0 20px 0 20px;
+}
+
+.navbar p{
+  color: rgb(182, 0, 0);
+  white-space: nowrap;
+  margin: auto;
+}
+
+.navbar-collapse {
+  justify-content: end;
+}
+
+.navbar-nav {
+  justify-content: space-between;
+  margin-right: 20px;
+  width: 30%;
+}
+
+
+.brand {
+  width: 180px;
+  height: auto;
+  padding: 0px;
+}
+
 .header {
   display: flex;
   flex-direction: row;
@@ -5,11 +32,6 @@
   outline: 2px solid orange;
 }
 
-.linkDiv {
-  display: flex;
-  justify-content: space-between;
-  width: 40%;
-}
 .pageName {
   margin: 20px;
 }
