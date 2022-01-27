@@ -55,7 +55,7 @@ export const updateDeck = async(deckData) => { //variables needed: "deck_id", "d
   return result;
 };
 
-export const removeCard = async(deckData) => { //variables needed: "deck_id", "card_id", "commander" boolean
+export const removeCard = async(deckData) => { //variables needed: "deck_id", "card_id", "sideBoard" boolean
   const result = await fetch(`/api/decks/removeCard`, {
     method: "PUT",
     body: JSON.stringify(deckData),

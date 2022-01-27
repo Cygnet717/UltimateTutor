@@ -118,17 +118,18 @@ module.exports = {
   async removeCard (req, res) {  // send "deck_id", "sideBoard"boolean, "card_id"
     let deletedCard;
     try{
-      if(req.body.sideBoard){
+      if(!req.body.sideBoard){
         deletedCard = await Deck.findOneAndUpdate(
           {_id: req.body.deck_id}, 
           {$pull: {sideBoard: {_id: req.body.card_id}}},
-          { new: true }
+          {new: true}
+          
         )
       } else {
         deletedCard = await Deck.findOneAndUpdate(
           {_id: req.body.deck_id}, 
           {$pull: {deckCards: {_id: req.body.card_id}}},
-          { new: true }
+          {new: true}
         )
       }
       res.json(deletedCard)
