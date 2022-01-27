@@ -39,7 +39,7 @@ export default function Login() {
     });
   };
   return (
-    <div className="container">
+    <div className="login-container">
       <h1>Login</h1>
       <Form  noValidate validated={false} onSubmit={handleFormSubmit}>
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
@@ -77,6 +77,8 @@ export default function Login() {
         >
         Submit
       </Button>
+      <p>Dont have any account yet?</p>
+      <a style={{margin: 'auto', color: 'black'}}href='/signup'>Sign Up</a>
     </Form>
   </div>
   )
