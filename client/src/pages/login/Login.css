@@ -1,11 +1,35 @@
+
+
+.login-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgb(222,126,0);
+    background: linear-gradient(240deg, rgba(222,126,0,1) 0%, rgba(121,46,9,1) 46%, rgba(171,23,0,1) 100%);
+    height: 100vh;
+    width: 100vw;
+    background-size: cover;
+    z-index: -1;
+}
+
+.login-container h1{
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0,0,0,0.3);
+    letter-spacing:1px; text-align:center;
+}
+
 .login-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: auto;
-    height: 50vh;
-    width: 20%;
+    margin-top: 100px;
+    height: 40vh;
+    width: 333px;
+    padding: 50px 40px 50px 40px;
+    border-radius: 20px;
+    z-index: 1;
 }
 
 .login-container form {
@@ -13,9 +37,41 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 120% !important;
+}
+
+.login-container input {
+    background-color: rgba(255, 255, 255, 0.091);
+    box-shadow: none;
+    width: 100% !important;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+    border: 1px solid rgba(0,0,0,0.3);
+    box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
+    color: white;
+}
+
+.login-container input:focus {
+    box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2) !important;
+    background-color: transparent !important;
+    color: white;
+}
+
+.login-container input::placeholder {
+    color: white !important;
 }
 
 .login-container Button {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 25px;
+    margin-bottom: 40px;
+    width: 82%;
+    font-size: 16px;
 }
+
+.btn:disabled {
+    position: relative;
+}
+
+.btn:disabled:hover {
+    pointer-events: all !important;
+    cursor: default;
+  }
