@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { Form, Button, Alert } from "react-bootstrap";
+import { useLocation } from 'react-router-dom'
 import { loginUser } from "../../utils/api";
 import Auth from "../../utils/auth";
 import "./Login.css";
@@ -10,13 +11,7 @@ export default function Login() {
   const [showAlert, setShowAlert] = useState(false);
   const { setUserDecks } = useContext(AuthContext);
 
-  // var submit = document.getElementById('submit');
-  // submit.className = 'submit';
-  // function addClass() {
-  //   submit.classList.remove = 'submit';
-  //   submit.classList.add = 'test';
-  //   submit.innerText = 'Login';
-  // }
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -45,6 +40,7 @@ export default function Login() {
       email: "",
       password: "",
     });
+
   };
   return (
     <div className="login-container">

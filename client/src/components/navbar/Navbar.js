@@ -9,19 +9,23 @@ import logo from "../../images/Logo228x75.png";
 export default function Navtabs() {
   const { user } = useContext(AuthContext);
 
+  const pathname = window.location.pathname
+  const accountInfo = document.getElementById("account-info");
+
   const handleLogout = () => {
     Auth.logout();
   };
 
   return (
     <>
-      <Navbar bg="light" expand="lg">
+      <Navbar expand="lg">
         <Navbar.Brand style={{ padding: "0px" }} href="/">
           <img className="brand" src={logo} alt="The Ultimate Tutor Logo" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav>
+          {pathname === "/login" || pathname === "/signup" ? ( "" ) : (
+          <Nav className="account-info">
             {user.data.username === "default" ? (
               <p>Login for full Access 👉</p>
             ) : (
@@ -40,7 +44,7 @@ export default function Navtabs() {
                 </>
               )}
             </div>
-          </Nav>
+          </Nav>)}
         </Navbar.Collapse>
       </Navbar>
     </>
