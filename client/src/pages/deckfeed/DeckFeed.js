@@ -3,7 +3,7 @@ import {useState, useEffect, useContext} from 'react'
 import {AuthContext} from "../../context/AuthContext"
 import {useParams} from 'react-router-dom';
 import cardImage from '../../images/Magic_card_back.jpg'
-import { toggleCommander } from '../../utils/deckApi';
+import { toggleCommander, removeCard } from '../../utils/deckApi';
 import { v4 as uuidv4 } from 'uuid';
 import './DeckFeed.css';
 
@@ -14,7 +14,7 @@ export default function DeckFeed() {
   const [sortedCards, setSortedCards]= useState([{Creatures: []}, {Instants: []}, {Sorceries:[]}, {Enchantments: []}, {Lands: []}, {Planeswalkers: []}, {Artifacts: []}])
   const [displayedCard, setDisplayedCard] = useState(cardImage)
   const [commanderCard, setCommanderCard] = useState()
-
+  const [editing, setEditing] = useState({visibility: 'hidden'}) //visible hidden
 
 
   const getDetails = async(deck_id) => {
@@ -89,6 +89,10 @@ export default function DeckFeed() {
     setDisplayedCard(selectedCard.getAttribute('data-image'))
   }
 
+  const handleRemoveCard = async (e) => {
+    console.log('remove card')
+  }
+
   useEffect(() => {
     getDetails(deck_id)
 
@@ -99,7 +103,7 @@ export default function DeckFeed() {
       <>
       <div className='leftSideDeck'>
         <h1>{deckData.deckName}</h1>
-        
+        <i class="far fa-edit"></i>
         {deckData.format === 'Commander'?
           <div>
             Commander: {
@@ -133,7 +137,8 @@ export default function DeckFeed() {
         </div> 
         <div>
           (if versioned) Wins/Losses:  3W/4L
-        </div> removed to narrow mvp scope  */}
+        </div> removed to narrow mvp scope  
+        */}
         <img id='displayedCard' src={displayedCard} alt='current card' />
       </div>
       <div className='rightSideDeck'>
@@ -144,7 +149,11 @@ export default function DeckFeed() {
                 <h4> {Object.keys(type)[0]} ({Object.values(type)[0].length})</h4>
                 <ul>
                   {Object.values(type)[0].map(card => 
-                    <li key={uuidv4()} onMouseOver={() => setDisplayedCard(card.image.front)} onMouseLeave={() => commanderCard? setDisplayedCard(commanderCard.image.front): console.log('no commander')}>{card.cardName}</li>
+                    <li 
+                      key={uuidv4()} 
+                      onMouseOver={() => setDisplayedCard(card.image.front)} 
+                      onMouseLeave={() => commanderCard? setDisplayedCard(commanderCard.image.front): console.log('no commander')}
+                    >{card.cardName}<span style={editing} onClick={handleRemoveCard}>&#9746;</span></li>
                   )}
                 </ul>
               </div>
