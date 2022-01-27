@@ -14,8 +14,8 @@ export default function DeckFeed() {
   const [sortedCards, setSortedCards]= useState([{Creatures: []}, {Instants: []}, {Sorceries:[]}, {Enchantments: []}, {Lands: []}, {Planeswalkers: []}, {Artifacts: []}])
   const [displayedCard, setDisplayedCard] = useState(cardImage)
   const [commanderCard, setCommanderCard] = useState()
-  const [editing, setEditing] = useState({visibility: 'hidden'}) //visible hidden
-
+  const [editing, setEditing] = useState(false) //visible hidden
+console.log(deckData)
 
   const getDetails = async(deck_id) => {
     const currentDeck = userDecks.find(deck => deck._id === deck_id)
@@ -90,7 +90,14 @@ export default function DeckFeed() {
   }
 
   const handleRemoveCard = async (e) => {
-    console.log('remove card')
+    const cardData ={
+      deck_id,
+      card_id: e.currentTarget.dataset.card_id,
+      sideBoard: e.currentTarget.dataset.sideboard
+    }
+    const response = await removeCard(cardData)
+    const result = await response.json()
+    await setDeckData(result) //update page
   }
 
   useEffect(() => {
@@ -103,7 +110,11 @@ export default function DeckFeed() {
       <>
       <div className='leftSideDeck'>
         <h1>{deckData.deckName}</h1>
-        <i class="far fa-edit"></i>
+        {editing?
+          <i className="far fa-save" onClick={() =>setEditing(false)}></i>
+          :
+          <i className="far fa-edit" onClick={() =>setEditing(true)}></i>
+        }
         {deckData.format === 'Commander'?
           <div>
             Commander: {
@@ -153,7 +164,16 @@ export default function DeckFeed() {
                       key={uuidv4()} 
                       onMouseOver={() => setDisplayedCard(card.image.front)} 
                       onMouseLeave={() => commanderCard? setDisplayedCard(commanderCard.image.front): console.log('no commander')}
-                    >{card.cardName}<span style={editing} onClick={handleRemoveCard}>&#9746;</span></li>
+                    >
+                      {card.cardName}
+                      <i 
+                        className="fas fa-times" 
+                        style={editing? {visibility: 'visible'} : {visibility: 'hidden'}}
+                        data-card_id={card._id} 
+                        data-sideboard = {false}
+                        onClick={handleRemoveCard}>
+                      </i>
+                    </li>
                   )}
                 </ul>
               </div>

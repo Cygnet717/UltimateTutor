@@ -4,7 +4,6 @@ import { v4 as uuid } from 'uuid';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { AuthContext } from "../../context/AuthContext";
 import { createDeck, removeDeck } from '../../utils/deckApi';
-import bin from '../../images/bin.png'
 import './DeskFeed.css';
 
 export default function DeskFeed() {
@@ -79,7 +78,7 @@ export default function DeskFeed() {
               </Container>
             </Col>
             <Col className='deleteButton' xs={1}>
-              <button  data-deck_id={deck._id} data-user_id={deck.user_id} onClick={startDeleteDeck}><img src={bin} alt='delete button'/></button>
+              <button  data-deck_id={deck._id} data-user_id={deck.user_id} onClick={startDeleteDeck}><i class="fas fa-trash"></i></button>
             </Col>
           </Container>
         )
