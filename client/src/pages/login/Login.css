@@ -2,8 +2,8 @@
 
 .login-page {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0px;
+    left: 0px;
     background: rgb(222,126,0);
     background: linear-gradient(240deg, rgba(222,126,0,1) 0%, rgba(121,46,9,1) 46%, rgba(171,23,0,1) 100%);
     filter: opacity(0.9);
