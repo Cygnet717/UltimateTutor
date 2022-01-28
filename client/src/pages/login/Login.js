@@ -52,6 +52,7 @@ export default function Login() {
             onClose={() => setShowAlert(false)}
             show={showAlert}
             variant="danger"
+            style={{ width: "46ch", display: 'flex' }}
           >
             Something went wrong with your login credentials!
           </Alert>
@@ -94,9 +95,9 @@ export default function Login() {
             size="lg"
             style={{ fontWeight: "300" }}
           >
-            LOGIN
+            Login
           </Button>
-          <p style={{ color: "white", fontSize: '14px' }}>
+          <p style={{ color: "white", fontSize: '16px' }}>
             Not registered? &nbsp;
             <a
               style={{ color: "#198754", textDecoration: "none" }}
