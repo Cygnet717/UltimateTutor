@@ -12,7 +12,7 @@ export default function DeskFeed() {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setNewDeckData({ ...newDeckData, user_id: user.data._id, [name]: value });
+    setNewDeckData({ ...newDeckData, user_id: user.data._id, [name]: value, commander: null });
   };
 
   const createNewDeck = async (e) => {
@@ -78,7 +78,7 @@ export default function DeskFeed() {
               </Container>
             </Col>
             <Col className='deleteButton' xs={1}>
-              <button  data-deck_id={deck._id} data-user_id={deck.user_id} onClick={startDeleteDeck}><i class="fas fa-trash"></i></button>
+              <button  data-deck_id={deck._id} data-user_id={deck.user_id} onClick={startDeleteDeck}><i className="fas fa-trash"></i></button>
             </Col>
           </Container>
         )
