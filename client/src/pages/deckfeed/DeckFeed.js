@@ -18,6 +18,7 @@ export default function DeckFeed() {
 
   const getDetails = async(deck_id) => {
     const currentDeck = userDecks.find(deck => deck._id === deck_id)
+    
     sortCardTypes(currentDeck)
   }
 
@@ -70,7 +71,9 @@ export default function DeckFeed() {
       setDeckData(currentDeck)
       if(currentDeck.commander){
         setCommanderCard(currentDeck.commander)
-        setDisplayedCard(currentDeck.commander)
+        setDisplayedCard(currentDeck.commander.image.front)
+      }else{
+        setDisplayedCard(currentDeck.deckCards[0].image.front)
       }
       
     }
@@ -122,7 +125,7 @@ export default function DeckFeed() {
             Commander: {commanderCard && !editing ? 
               commanderCard.cardName 
               : 
-              <select onChange={handleCommanderSelect} >
+              <select onChange={handleCommanderSelect} value={commanderCard._id}>
                 <option >select a commander</option>
                  {deckData.deckCards.map(card => 
                    <option key={uuidv4()} data-image={card.image.front} data-name={card.cardName} value={card._id}>{card.cardName}</option>

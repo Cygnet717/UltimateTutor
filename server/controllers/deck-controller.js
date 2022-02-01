@@ -104,7 +104,6 @@ module.exports = {
 
   async toggleCommander(req, res){ // send deck_id, cardData
     try{
-      console.log(req.body.cardData)
       const commandered = await Deck.findOneAndUpdate(
         {_id: req.body.deck_id},
         {$set: {'commander': req.body.cardData}},
