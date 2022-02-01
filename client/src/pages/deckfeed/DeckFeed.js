@@ -18,6 +18,7 @@ export default function DeckFeed() {
 
   const getDetails = async(deck_id) => {
     const currentDeck = userDecks.find(deck => deck._id === deck_id)
+    
     sortCardTypes(currentDeck)
   }
 
@@ -68,26 +69,29 @@ export default function DeckFeed() {
         {Artifacts: deckArtifacts}
       ])
       setDeckData(currentDeck)
-      const commCard = currentDeck.deckCards.find(card => card.commander)
-      if(commCard){
-        setCommanderCard(commCard)
-        setDisplayedCard(commCard.image.front)
+      if(currentDeck.commander){
+        setCommanderCard(currentDeck.commander)
+        setDisplayedCard(currentDeck.commander.image.front)
+      }else{
+        setDisplayedCard(currentDeck.deckCards[0].image.front)
       }
       
     }
   }
 
   const handleCommanderSelect = async (event) => {
+    const card_id = event.target.value
+    const selectedCard = deckData.deckCards.find(card => card._id === card_id)
+    
+    setCommanderCard(selectedCard)
+    setDisplayedCard(selectedCard.image.front)
     const commanderData = {
       deck_id: deckData._id,
-      card_id: event.target.value,
-      commander: true
+      cardData: selectedCard
     }
-    const selectedCard = event.target[event.target.selectedIndex]
-    const cardName = selectedCard.getAttribute('data-name')
-    toggleCommander(commanderData)
-    setCommanderCard({cardName})
-    setDisplayedCard(selectedCard.getAttribute('data-image'))
+   
+    const res = await toggleCommander(commanderData)
+    
   }
 
   const handleRemoveCard = async (e) => {
@@ -118,12 +122,11 @@ export default function DeckFeed() {
         }
         {deckData.format === 'Commander'?
           <div>
-            Commander: {
-              commanderCard ? 
+            Commander: {commanderCard && !editing ? 
               commanderCard.cardName 
               : 
-              <select onChange={handleCommanderSelect}>
-                <option>select a commander</option>
+              <select onChange={handleCommanderSelect} value={commanderCard._id}>
+                <option >select a commander</option>
                  {deckData.deckCards.map(card => 
                    <option key={uuidv4()} data-image={card.image.front} data-name={card.cardName} value={card._id}>{card.cardName}</option>
                  )}

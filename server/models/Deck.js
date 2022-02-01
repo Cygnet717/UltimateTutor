@@ -17,14 +17,22 @@ const deckschema = new Schema(
     version: {
       type: Number
     },
-    deckCards: [{
+    commander: {
       cardName: String,
       image: {
         front: String,
         back: String
       },
       cardType: String,
-      commander: Boolean
+      _id: Schema.Types.ObjectId
+    },
+    deckCards: [{
+      cardName: String,
+      image: {
+        front: String,
+        back: String
+      },
+      cardType: String
     }],
     sideBoard: [{
       cardName: String,

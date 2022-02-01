@@ -102,11 +102,12 @@ module.exports = {
 
   },
 
-  async toggleCommander(req, res){ // send deck_id, card_id, commander boolean
+  async toggleCommander(req, res){ // send deck_id, cardData
     try{
-      const commandered = await Deck.updateOne(
-        {_id: req.body.deck_id, 'deckCards._id': req.body.card_id},
-        {$set: {'deckCards.$.commander': req.body.commander}}
+      const commandered = await Deck.findOneAndUpdate(
+        {_id: req.body.deck_id},
+        {$set: {'commander': req.body.cardData}},
+        {new: true}
       )
       res.json(commandered)
     } catch (err){
@@ -117,11 +118,8 @@ module.exports = {
   //remove card from deck
   async removeCard (req, res) {  // send "deck_id", "sideBoard"boolean, "card_id"
     let deletedCard;
-    console.log(typeof(req.body.sideBoard))
-
     try{
       if(req.body.sideBoard){
-        console.log('sideboard')
         deletedCard = await Deck.findOneAndUpdate(
           {_id: req.body.deck_id}, 
           {$pull: {sideBoard: {_id: req.body.card_id}}},
@@ -129,7 +127,6 @@ module.exports = {
           
         )
       } else {
-        console.log('deckList')
         deletedCard = await Deck.findOneAndUpdate(
           {_id: req.body.deck_id}, 
           {$pull: {deckCards: {_id: req.body.card_id}}},

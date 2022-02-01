@@ -9,7 +9,7 @@ export default function Home() {
   const [advSearch, setAdvSearch] = useState(false)
   const [searchFormData, setSearchFormData] = useState({color: '%3A'}) //'%3A' Percent-encoding for ':'
   const [searchResults, setSearchResults] = useState(false)
-  const [constructingDeck, setConstructingDeck] = useState()
+  const [constructingDeck, setConstructingDeck] = useState({deck_id: ''})
   const {user, userDecks} = useContext(AuthContext)
   const loggedIn = user.data.username ==='default'? false: true
 
