@@ -82,7 +82,7 @@ export default function DeckFeed() {
   const handleCommanderSelect = async (event) => {
     const card_id = event.target.value
     const selectedCard = deckData.deckCards.find(card => card._id === card_id)
-    console.log(selectedCard)
+    
     setCommanderCard(selectedCard)
     setDisplayedCard(selectedCard.image.front)
     const commanderData = {
@@ -91,7 +91,7 @@ export default function DeckFeed() {
     }
    
     const res = await toggleCommander(commanderData)
-    console.log(res.json())
+    
   }
 
   const handleRemoveCard = async (e) => {

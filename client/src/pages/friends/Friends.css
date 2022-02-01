@@ -1,0 +1,14 @@
+#friendsContent {
+  display: flex;
+  flex-direction: row;
+}
+
+#friendsList {
+  outline: 1px solid blue;
+  width: 25%;
+}
+
+#activityFeed {
+  outline: 1px solid purple;
+  width: 70%;
+}
