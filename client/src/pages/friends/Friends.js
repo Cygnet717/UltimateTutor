@@ -1,8 +1,23 @@
-import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Button } from 'react-bootstrap'
+import { getAllUser } from '../../utils/api';
+import AddFriendModal from '../../components/AddFriendModal/AddFriendModal'
 import './Friends.css'
 
 export default function Friends() {
+  const [modalShow, setModalShow] = useState(false);
+  const [allUsers, setAllUsers] = useState()
+
+  const collectAllUserData = async () => {
+    const response = await getAllUser()
+    const result = await response.json()
+    setAllUsers(result)
+  }
+
+  useEffect(() => {
+    collectAllUserData()
+  }, [])
+
   return (
     <div id='friendsContent'>
       <div id='friendsList'>
@@ -11,10 +26,20 @@ export default function Friends() {
         <p>Squee</p>
         <p>Meat Logs</p>
         <p>Bucket</p>
+        <Button variant="primary" onClick={() => setModalShow(true)}>
+          Make A Friend
+        </Button>
+
+        <AddFriendModal
+          show={modalShow}
+          users={allUsers}
+          onHide={() => setModalShow(false)}
+        />
+        
       <h3>Pending Friends</h3>
-        <p>Johnson<i class="far fa-plus-square"></i><i class="far fa-minus-square"></i></p>
-        <p>Willy<i class="far fa-plus-square"></i><i class="far fa-minus-square"></i></p>
-        <p>Knob<i class="far fa-plus-square"></i><i class="far fa-minus-square"></i></p>
+        <p>Johnson<i className="far fa-plus-square"></i><i className="far fa-minus-square"></i></p>
+        <p>Willy<i className="far fa-plus-square"></i><i className="far fa-minus-square"></i></p>
+        <p>Knob<i className="far fa-plus-square"></i><i className="far fa-minus-square"></i></p>
       </div>
       <div id='activityFeed'>
         <h3>Recent Activity</h3>

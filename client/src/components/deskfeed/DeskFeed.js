@@ -8,7 +8,7 @@ import './DeskFeed.css';
 
 export default function DeskFeed() {
   const { user, userDecks, checkForDecks } = useContext(AuthContext)
-  const [ newDeckData, setNewDeckData ] = useState()
+  const [ newDeckData, setNewDeckData ] = useState({user_id: user.data._id, deckName: '', format: ''})
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -24,11 +24,11 @@ export default function DeskFeed() {
         throw new Error('something went wrong!');
       }
       const newDeck = await response.json()
+      setNewDeckData({user_id: user.data._id, deckName: '', format: ''})
     checkForDecks()
     } catch (err){
       console.error(err)
     }
-    setNewDeckData({user_id: user.data._id, deckName: '', format: ''})
   }
 
   const startDeleteDeck = async (e) => {
@@ -61,7 +61,7 @@ export default function DeskFeed() {
           <Container className='singleDeck' key={uuid()}>
             <Col>
               <Container >
-                  <Col onClick={() => showDeckList(deck._id)}>{deck.deckName}</Col>
+                  <Col onClick={() => showDeckList(deck._id)} className='border'>{deck.deckName}</Col>
                   <Col>Card Count: {deck.deckCards.length}</Col>
                   <Col>Side Board: {deck.sideBoard.length}</Col>
                   {/* <Col>Version: {deck.versionToBe -1} <button>Save Version</button></Col> --simplify MVP*/}
@@ -89,12 +89,12 @@ export default function DeskFeed() {
             <Row>
               <Col>
                 <Form.Group className="mb-3">
-                  <Form.Control id="deckNameTextInput" placeholder="New Deck Name" name='deckName' onChange={handleInputChange}/>
+                  <Form.Control id="deckNameTextInput" placeholder="New Deck Name" name='deckName' onChange={handleInputChange} value={newDeckData.deckName}/>
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group className="mb-3">
-                  <Form.Select id="Format" name="format" onChange={handleInputChange}>
+                  <Form.Select id="Format" name="format" onChange={handleInputChange} value={newDeckData.format}>
                     <option>Select Format</option>
                     <option value='Standard'>Standard</option>
                     <option value='Commander'>Commander</option>
