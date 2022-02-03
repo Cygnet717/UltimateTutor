@@ -19,7 +19,6 @@ export const getAllUser = async () => {
 };
 
 export const createUser = async (userData) => {
-  console.log(userData)
   const result = await fetch("/api/users", {
     method: "POST",
     headers: {
@@ -54,6 +53,7 @@ export const updateUser = async(userData) => {
 }
 
 export const makeFriend = async(userData) => {
+  console.log('hit here')
   const result = await fetch(`/api/users/make-friend`, {
     method: "PUT",
     body: JSON.stringify(userData),
