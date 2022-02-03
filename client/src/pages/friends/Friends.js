@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Button } from 'react-bootstrap'
 import {AuthContext} from '../../context/AuthContext';
-import { getAllUser } from '../../utils/api';
+import { getAllUser, makeFriend } from '../../utils/api';
 import AddFriendModal from '../../components/AddFriendModal/AddFriendModal'
 import './Friends.css'
 
 export default function Friends() {
   const [modalShow, setModalShow] = useState(false);
   const [allUsers, setAllUsers] = useState();
-  const { user, userFriends } = useContext(AuthContext);
-  console.log(userFriends.pendingFriends.length)
+  const { user, userFriends, checkForFriends } = useContext(AuthContext);
   
   const collectAllUserData = async () => {
     const response = await getAllUser()
@@ -17,21 +16,37 @@ export default function Friends() {
     setAllUsers(result)
   }
 
+  const handleYesFriend = async (friend_id) => {
+    const friendData = {
+      user_id: user.data._id,
+      friend_id: friend_id,
+      inPending: true
+    }
+    const response = await makeFriend(friendData)
+    const result =  await response.json()
+    // const friends = {
+    //   friends: result.friends,
+    //   pendingFriends: result.pendingFriends
+    // }
+    checkForFriends()
+  }
+
+  const handleNoFriend = async (friend_id) => {
+
+  }
+
   useEffect(() => {
     collectAllUserData()
-    console.log('how many times')
   }, [])
 
   return (
     <div id='friendsContent'>
       <div id='friendsList'>
-      <h3>Friends</h3>
-      {userFriends.friends.map(fren => 
-        <p key={fren._id}>{fren.username}</p>
+        <h3>Friends</h3>
+        {userFriends.friends.map(fren => 
+          <p key={fren._id}>{fren.username}</p>
 
-        )
-      }
-        <p>Bucket</p>
+        )}
         <Button variant="primary" onClick={() => setModalShow(true)}>
           Make A Friend
         </Button>
@@ -43,13 +58,14 @@ export default function Friends() {
           onHide={() => setModalShow(false)}
         />
         
-      <h3>Pending Friends</h3>
+        <h3>Pending Friends</h3>
         {userFriends.pendingFriends.map(penFren => 
-        <p key={penFren._id}>{penFren.username}<i className="far fa-plus-square"></i><i className="far fa-minus-square"></i></p>
-
-        )
-      }
-        <p>Knob<i className="far fa-plus-square"></i><i className="far fa-minus-square"></i></p>
+          <p key={penFren._id}>{penFren.username}
+            <i className="far fa-plus-square" onClick={() => handleYesFriend(penFren._id)}></i>
+            <i className="far fa-minus-square" onClick={() => handleNoFriend(penFren._id)}></i>
+          </p>
+        )}
+      
       </div>
       <div id='activityFeed'>
         <h3>Recent Activity</h3>

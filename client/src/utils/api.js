@@ -62,7 +62,7 @@ export const getUserFriends = async(user_id) => { //variables needed: "user_id"
   return result;
 };
 
-export const makeFriend = async(userData) => {
+export const makeFriend = async(userData) => {//loggedin user_id, friend_id, inPending boolean (true = friend_id is in pending list already and should be moved to friend list)
   console.log('hit here')
   const result = await fetch(`/api/users/make-friend`, {
     method: "PUT",
