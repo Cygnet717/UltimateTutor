@@ -24,8 +24,18 @@ const userSchema = new Schema(
         ref: "Deck"
       }
     ],
-    pendingFriends: Array,
-    friends: Array,
+    pendingFriends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+      }
+    ],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+      }
+    ],
     dateJoined: { 
       type: Date,
       default: new Date() 
