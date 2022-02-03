@@ -21,6 +21,18 @@ module.exports = {
     res.json(foundUsers);
   },
 
+  async getUserFriends(req, res) {
+    console.log(req.params)
+    const foundFriends = await User.findOne({
+      _id: req.params.user_id
+    })
+    .populate('pendingFriends')
+    .populate('friends')
+    console.log(foundFriends)
+
+    res.json(foundFriends);
+  },
+
   async createUser({ body }, res) {
     const user = await User.create(body);
 

@@ -1,16 +1,13 @@
-import React, {useState, useContext} from 'react';
-import {AuthContext} from '../../context/AuthContext';
+import React, {useState} from 'react';
 import { Modal, Button, Form } from 'react-bootstrap'
 import { makeFriend } from '../../utils/api';
 
 export default function AddFriendModal(props) {
   const [isValid, setIsValid] = useState(false)
   const [foundFriend, setFoundFriend] = useState()
-  const { user } = useContext(AuthContext)
-
+  
   const checkForUser = (e) => {
-    const found = props.users.find(user => user.username === e.target.value)
-    console.log(found)
+    const found = props.allusers.find(user => user.username === e.target.value)
     if(found){
       setIsValid(true)
       setFoundFriend(found)
@@ -22,10 +19,11 @@ export default function AddFriendModal(props) {
     props.onHide()
     setIsValid(false)
     const friendshipData ={
-      user_id: user.data._id,
+      user_id: props.curruser._id,
       friend_id: foundFriend._id,
       inPending: false
     }
+    console.log(friendshipData)
     const response = await makeFriend(friendshipData)
     const result = await response.json()
     console.log(result)

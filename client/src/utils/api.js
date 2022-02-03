@@ -3,7 +3,7 @@ export const getMe = async (token) => {
     headers: {
       "Content-Type": "application/json",
       'authorization': `Bearer ${token}`
-    },
+    }
   });
   return result;
 };
@@ -50,7 +50,17 @@ export const updateUser = async(userData) => {
     },
   });
   return result;
-}
+};
+
+export const getUserFriends = async(user_id) => { //variables needed: "user_id"
+  const result = await fetch(`/api/users/get-friends/${user_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return result;
+};
 
 export const makeFriend = async(userData) => {
   console.log('hit here')
