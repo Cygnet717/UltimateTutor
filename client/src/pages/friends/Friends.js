@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Button } from 'react-bootstrap'
 import {AuthContext} from '../../context/AuthContext';
-import { getAllUser, makeFriend } from '../../utils/api';
+import { getAllUser, makeFriend, dropFriend } from '../../utils/api';
 import AddFriendModal from '../../components/AddFriendModal/AddFriendModal'
 import './Friends.css'
 
@@ -16,23 +16,20 @@ export default function Friends() {
     setAllUsers(result)
   }
 
-  const handleYesFriend = async (friend_id) => {
+  const handleFriendResponse = async (event, friend_id) => {
+    const classString = event.currentTarget.getAttribute('class')
     const friendData = {
       user_id: user.data._id,
       friend_id: friend_id,
       inPending: true
     }
-    const response = await makeFriend(friendData)
-    const result =  await response.json()
-    // const friends = {
-    //   friends: result.friends,
-    //   pendingFriends: result.pendingFriends
-    // }
-    checkForFriends()
-  }
-
-  const handleNoFriend = async (friend_id) => {
-
+    if(classString.includes('plus')){
+      const response = await makeFriend(friendData)
+      checkForFriends()
+    } else if (classString.includes('minus')){
+      const response = await dropFriend(friendData)
+      checkForFriends()
+    }
   }
 
   useEffect(() => {
@@ -61,8 +58,8 @@ export default function Friends() {
         <h3>Pending Friends</h3>
         {userFriends.pendingFriends.map(penFren => 
           <p key={penFren._id}>{penFren.username}
-            <i className="far fa-plus-square" onClick={() => handleYesFriend(penFren._id)}></i>
-            <i className="far fa-minus-square" onClick={() => handleNoFriend(penFren._id)}></i>
+            <i className="far fa-plus-square" onClick={(e) => handleFriendResponse(e, penFren._id)}></i>
+            <i className="far fa-minus-square" onClick={(e) => handleFriendResponse(e, penFren._id)}></i>
           </p>
         )}
       

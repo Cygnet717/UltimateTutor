@@ -114,13 +114,13 @@ module.exports = {
       //remove friend_id from user_id friend list or pending list
       const removedFriend = await User.findOneAndUpdate(
         {_id: req.body.user_id},
-        {$pull: {friends: req.body.friend_id}},
+        {$pull: {friends: req.body.friend_id, pendingFriends: req.body.friend_id}},
         {new: true}
       )
       //remove user_id from friend_id friend list or pending list
       const removedUser = await User.findOneAndUpdate(
         {_id: req.body.friend_id},
-        {$pull: {friends: req.body.user_id}}
+        {$pull: {friends: req.body.friend_id, pendingFriends: req.body.friend_id}}
       )
 
       res.json(removedFriend)
