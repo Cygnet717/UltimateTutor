@@ -15,7 +15,7 @@ export default function DeckFeed() {
   const [displayedCard, setDisplayedCard] = useState(cardImage)
   const [commanderCard, setCommanderCard] = useState()
   const [editing, setEditing] = useState(false) //visible hidden
-
+  console.log(sortedCards[5].Planeswalkers)
   const getDetails = async(deck_id) => {
     const currentDeck = userDecks.find(deck => deck._id === deck_id)
     
@@ -125,9 +125,12 @@ export default function DeckFeed() {
             Commander: {commanderCard && !editing ? 
               commanderCard.cardName 
               : 
-              <select onChange={handleCommanderSelect} value={commanderCard._id}>
+              <select onChange={handleCommanderSelect} value={commanderCard? commanderCard._id : ''}>
                 <option >select a commander</option>
-                 {deckData.deckCards.map(card => 
+                 {sortedCards[0].Creatures.map(card => 
+                   <option key={uuidv4()} data-image={card.image.front} data-name={card.cardName} value={card._id}>{card.cardName}</option>
+                 )}
+                 {sortedCards[5].Planeswalkers.map(card => 
                    <option key={uuidv4()} data-image={card.image.front} data-name={card.cardName} value={card._id}>{card.cardName}</option>
                  )}
               </select>

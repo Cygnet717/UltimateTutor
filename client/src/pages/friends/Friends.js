@@ -65,11 +65,10 @@ export default function Friends() {
       
       </div>
       <div id='activityFeed'>
-        <h3>Recent Activity</h3>
-        <p>Meat Logs made a new deck</p>
-        <p>Squee made a deck</p>
-        <p>Meat Logs changed their deck</p>
-        <p>Bucket Made a deck</p>
+        <h3>Kathys Decks</h3>
+        <p>Birds  Format:   DateCreated:  </p>
+        <p>Monster  Format:   DateCreated:  </p>
+        
       </div>
     </div>
   )
