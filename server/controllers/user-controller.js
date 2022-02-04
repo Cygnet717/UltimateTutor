@@ -67,20 +67,16 @@ module.exports = {
   },
 
   async makeFriend(req, res){  //send loggedin user_id, friend_id, inPending boolean (true = friend_id is in pending list already and should be moved to friend list)
-  console.log('----------------------------')
-
     try{
       let updatedFriends;
       if(req.body.inPending){
         //remove from pendingFriends
-        console.log('remove from pendingFriends')
         const removedPending = await User.findOneAndUpdate(
           {_id: req.body.user_id}, 
           {$pull: {pendingFriends: req.body.friend_id}}
         )
 
         //add to friend_id friends list
-        console.log('add to friend_id friends list')
         updatedFriends = await User.findOneAndUpdate(
           {_id: req.body.user_id}, 
           {$push: {friends: req.body.friend_id}},
@@ -88,7 +84,6 @@ module.exports = {
         )
 
         //add to user_id friends list
-        console.log('add to user_id friends list')
         const addedToFriend = await User.findOneAndUpdate(
           {_id: req.body.friend_id},
           {$push: {friends: req.body.user_id}}
@@ -96,7 +91,6 @@ module.exports = {
 
       } else {
         //add user_id to friends pending list
-        console.log('add user_id to friends pending list')
         updatedFriends = await User.findOneAndUpdate(
           {_id: req.body.friend_id}, 
           {$push: {pendingFriends: req.body.user_id}},
@@ -114,13 +108,13 @@ module.exports = {
       //remove friend_id from user_id friend list or pending list
       const removedFriend = await User.findOneAndUpdate(
         {_id: req.body.user_id},
-        {$pull: {friends: req.body.friend_id}},
+        {$pull: {friends: req.body.friend_id, pendingFriends: req.body.friend_id}},
         {new: true}
       )
       //remove user_id from friend_id friend list or pending list
       const removedUser = await User.findOneAndUpdate(
         {_id: req.body.friend_id},
-        {$pull: {friends: req.body.user_id}}
+        {$pull: {friends: req.body.friend_id, pendingFriends: req.body.friend_id}}
       )
 
       res.json(removedFriend)

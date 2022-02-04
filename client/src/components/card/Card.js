@@ -9,13 +9,25 @@ import './Card.css';
 export default function Card(props) {
   const {setUserDecks, user} = useContext(AuthContext)
   const [showConf, setShowConf] = useState(false)
-  // const [currentDeck, setCurrentDeck] = useState()
-  
 
   let frontSideImage = cardImage;
   let backSideImage = cardImage;
   let isDoubleSided = false;
   let isSideboard = false;
+
+  var timeLeft = 3;
+  
+  function setTime() {
+    var timerInterval = setInterval( function () {
+      timeLeft --;
+     
+  
+      if(timeLeft === 0){
+        clearInterval(timerInterval);
+        setShowConf(false);
+      }
+    }, 1000)
+  }
 
   if(props.cardData){
     if(props.cardData.image_uris){
@@ -73,6 +85,7 @@ export default function Card(props) {
     const result = await response.json()
     setUserDecks(result)
     setShowConf(true)
+    setTime()
   }
 
   const handleSideboardCheck = () => {
