@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
+import moment from 'moment';
 import { Button } from 'react-bootstrap'
-import {AuthContext} from '../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
+import { getUserDecks } from '../../utils/deckApi';
 import { getAllUser, makeFriend, dropFriend } from '../../utils/api';
 import AddFriendModal from '../../components/AddFriendModal/AddFriendModal'
 import './Friends.css'
 
 export default function Friends() {
-  const [modalShow, setModalShow] = useState(false);
-  const [allUsers, setAllUsers] = useState();
+  const [ showFriendModal, setShowFriendModal ] = useState(false);
+  const [ showUnfriendModal, setShowUnfriendModal] = useState(false);
+  const [ allUsers, setAllUsers ] = useState();
+  const [ friendDecks, setFriendDecks ] = useState(false);
   const { user, userFriends, checkForFriends } = useContext(AuthContext);
   
   const collectAllUserData = async () => {
@@ -32,6 +36,19 @@ export default function Friends() {
     }
   }
 
+  const handleSelectedFriend = async (friendId, friendName) => {
+    const response = await getUserDecks(friendId)
+    const result = await response.json()
+    setFriendDecks({
+      username: friendName,
+      decks: result
+    })
+  }
+
+  const handleUnfriend = () => {
+    setShowUnfriendModal(true)
+  }
+
   useEffect(() => {
     collectAllUserData()
   }, [])
@@ -40,19 +57,19 @@ export default function Friends() {
     <div id='friendsContent'>
       <div id='friendsList'>
         <h3>Friends</h3>
-        {userFriends.friends.map(fren => 
-          <p key={fren._id}>{fren.username}</p>
+        {userFriends.friends.map(friend => 
+          <p key={friend._id} onClick={() => handleSelectedFriend(friend._id, friend.username)}>{friend.username}</p>
 
         )}
-        <Button variant="primary" onClick={() => setModalShow(true)}>
+        <Button variant="primary" onClick={() => setShowFriendModal(true)}>
           Make A Friend
         </Button>
 
         <AddFriendModal
-          show={modalShow}
+          show={showFriendModal}
           allusers={allUsers}
           curruser= {user.data}
-          onHide={() => setModalShow(false)}
+          onHide={() => setShowFriendModal(false)}
         />
         
         <h3>Pending Friends</h3>
@@ -65,9 +82,23 @@ export default function Friends() {
       
       </div>
       <div id='activityFeed'>
-        <h3>Kathys Decks</h3>
-        <p>Birds  Format:   DateCreated:  </p>
-        <p>Monster  Format:   DateCreated:  </p>
+        {friendDecks? 
+          <>
+          <h3>{friendDecks.username} Decks</h3>
+          {friendDecks.decks.map(deck => 
+            <div key={deck._id}>
+              <h5>{deck.deckName}</h5>
+              <p>Format: {deck.format} || DateCreated: {moment(deck.dateStarted).format('MMMM DD YYYY')} </p>
+            </div>
+          )}
+          
+          <Button variant="danger" onClick={() => handleUnfriend()}>Unfriend</Button>
+          </>
+          :
+          <>
+          no selected friend
+          </>
+        }
         
       </div>
     </div>
