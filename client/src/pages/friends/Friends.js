@@ -8,7 +8,8 @@ import AddFriendModal from '../../components/AddFriendModal/AddFriendModal'
 import './Friends.css'
 
 export default function Friends() {
-  const [ modalShow, setModalShow ] = useState(false);
+  const [ showFriendModal, setShowFriendModal ] = useState(false);
+  const [ showUnfriendModal, setShowUnfriendModal] = useState(false);
   const [ allUsers, setAllUsers ] = useState();
   const [ friendDecks, setFriendDecks ] = useState(false);
   const { user, userFriends, checkForFriends } = useContext(AuthContext);
@@ -44,6 +45,10 @@ export default function Friends() {
     })
   }
 
+  const handleUnfriend = () => {
+    setShowUnfriendModal(true)
+  }
+
   useEffect(() => {
     collectAllUserData()
   }, [])
@@ -56,15 +61,15 @@ export default function Friends() {
           <p key={friend._id} onClick={() => handleSelectedFriend(friend._id, friend.username)}>{friend.username}</p>
 
         )}
-        <Button variant="primary" onClick={() => setModalShow(true)}>
+        <Button variant="primary" onClick={() => setShowFriendModal(true)}>
           Make A Friend
         </Button>
 
         <AddFriendModal
-          show={modalShow}
+          show={showFriendModal}
           allusers={allUsers}
           curruser= {user.data}
-          onHide={() => setModalShow(false)}
+          onHide={() => setShowFriendModal(false)}
         />
         
         <h3>Pending Friends</h3>
@@ -87,7 +92,7 @@ export default function Friends() {
             </div>
           )}
           
-          <div>Unfriend Button</div>
+          <Button variant="danger" onClick={() => handleUnfriend()}>Unfriend</Button>
           </>
           :
           <>
