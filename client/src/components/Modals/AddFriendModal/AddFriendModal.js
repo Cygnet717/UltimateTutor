@@ -1,14 +1,21 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap'
 import { makeFriend } from '../../../utils/api';
 
 export default function AddFriendModal(props) {
-  const [isValid, setIsValid] = useState(false)
-  const [foundFriend, setFoundFriend] = useState()
-  
+  const [ isValid, setIsValid ] = useState()
+  const [ foundFriend, setFoundFriend ] = useState()
+  const [ feedback, setFeedback ] = useState()
+
   const checkForUser = (e) => {
+    const currFriend = props.currFriends.find(user => user.username === e.target.value)
     const found = props.allusers.find(user => user.username === e.target.value)
-    if(found){
+    if(currFriend){
+      console.log('already friends')
+      setFeedback('You are already friends!')
+      setIsValid(true)
+    } else if(found){
+      setFeedback('Become friends now!')
       setIsValid(true)
       setFoundFriend(found)
     }
@@ -43,7 +50,8 @@ export default function AddFriendModal(props) {
           <Form.Group className="mb-3">
             <Form.Label>Type in your friends user name *case sensitive*</Form.Label>
             <Form.Control onChange={checkForUser}/>
-            <Form.Control.Feedback>Found Your Friend!</Form.Control.Feedback>
+            <Form.Control.Feedback>{feedback}</Form.Control.Feedback>
+            
           </Form.Group>
         </Form>
       </Modal.Body>

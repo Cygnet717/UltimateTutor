@@ -14,7 +14,6 @@ export default function Friends() {
   const [ allUsers, setAllUsers ] = useState();
   const [ friendDecks, setFriendDecks ] = useState(false);
   const { user, userFriends, checkForFriends } = useContext(AuthContext);
-  console.log(userFriends)
   
   const collectAllUserData = async () => {
     const response = await getAllUser()
@@ -71,6 +70,7 @@ export default function Friends() {
         <AddFriendModal
           show={showFriendModal}
           allusers={allUsers}
+          currFriends={userFriends.friends}
           curruser= {user.data}
           onHide={() => setShowFriendModal(false)}
         />
