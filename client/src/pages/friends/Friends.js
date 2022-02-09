@@ -14,6 +14,7 @@ export default function Friends() {
   const [ allUsers, setAllUsers ] = useState();
   const [ friendDecks, setFriendDecks ] = useState(false);
   const { user, userFriends, checkForFriends } = useContext(AuthContext);
+  console.log(userFriends)
   
   const collectAllUserData = async () => {
     const response = await getAllUser()
