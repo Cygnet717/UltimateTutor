@@ -79,21 +79,21 @@ module.exports = {
         //add to friend_id friends list
         updatedFriends = await User.findOneAndUpdate(
           {_id: req.body.user_id}, 
-          {$push: {friends: req.body.friend_id}},
+          {$addToSet: {friends: req.body.friend_id}},
           { new: true }
         )
 
         //add to user_id friends list
         const addedToFriend = await User.findOneAndUpdate(
           {_id: req.body.friend_id},
-          {$push: {friends: req.body.user_id}}
+          {$addToSet: {friends: req.body.user_id}}
         )
 
       } else {
         //add user_id to friends pending list
         updatedFriends = await User.findOneAndUpdate(
           {_id: req.body.friend_id}, 
-          {$push: {pendingFriends: req.body.user_id}},
+          {$addToSet: {pendingFriends: req.body.user_id}},
           { new: true }
         )
       }
