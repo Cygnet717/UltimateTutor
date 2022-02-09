@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Modal, Button, Form } from 'react-bootstrap'
-import { makeFriend } from '../../utils/api';
+import { makeFriend } from '../../../utils/api';
 
 export default function AddFriendModal(props) {
   const [isValid, setIsValid] = useState(false)
@@ -23,21 +23,18 @@ export default function AddFriendModal(props) {
       friend_id: foundFriend._id,
       inPending: false
     }
-    console.log(friendshipData)
     const response = await makeFriend(friendshipData)
     const result = await response.json()
-    console.log(result)
   }
 
   return (
-    <Modal
-      {...props}
+    <Modal {...props}
       size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
+      aria-labelledby="Add new friend modal"
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
+        <Modal.Title id="Add new friend modal">
           Add a friend
         </Modal.Title>
       </Modal.Header>

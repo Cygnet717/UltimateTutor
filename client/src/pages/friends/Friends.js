@@ -4,7 +4,8 @@ import { Button } from 'react-bootstrap'
 import { AuthContext } from '../../context/AuthContext';
 import { getUserDecks } from '../../utils/deckApi';
 import { getAllUser, makeFriend, dropFriend } from '../../utils/api';
-import AddFriendModal from '../../components/AddFriendModal/AddFriendModal'
+import AddFriendModal from '../../components/Modals/AddFriendModal/AddFriendModal'
+import UnfriendModal from '../../components/Modals/RemoveFriendModal/RemoveFriendModal';
 import './Friends.css'
 
 export default function Friends() {
@@ -41,6 +42,7 @@ export default function Friends() {
     const result = await response.json()
     setFriendDecks({
       username: friendName,
+      friendId: friendId,
       decks: result
     })
   }
@@ -99,7 +101,14 @@ export default function Friends() {
           no selected friend
           </>
         }
-        
+        <UnfriendModal
+          show={showUnfriendModal}
+          onHide={() => setShowUnfriendModal(false)}
+          userid={user.data._id}
+          friendname={friendDecks.username}
+          friendid={friendDecks.friendId}
+          resetfriends={() => checkForFriends()}
+        />
       </div>
     </div>
   )
