@@ -15,7 +15,7 @@ export default function DeckFeed() {
   const [displayedCard, setDisplayedCard] = useState(cardImage)
   const [commanderCard, setCommanderCard] = useState()
   const [editing, setEditing] = useState(false) //visible hidden
-  console.log(sortedCards[5].Planeswalkers)
+
   const getDetails = async(deck_id) => {
     const currentDeck = userDecks.find(deck => deck._id === deck_id)
     

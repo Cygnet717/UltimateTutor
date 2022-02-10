@@ -51,6 +51,10 @@ export default function Friends() {
     setShowUnfriendModal(true)
   }
 
+  const showDeckList = (deck_id) => {
+    window.location.assign(`/deckList/${deck_id}`)
+  }
+
   useEffect(() => {
     collectAllUserData()
   }, [])
@@ -87,11 +91,18 @@ export default function Friends() {
       <div id='activityFeed'>
         {friendDecks? 
           <>
-          <h3>{friendDecks.username} Decks</h3>
+          <h3>{friendDecks.username} Decks</h3> 
           {friendDecks.decks.map(deck => 
             <div key={deck._id}>
-              <h5>{deck.deckName}</h5>
-              <p>Format: {deck.format} || DateCreated: {moment(deck.dateStarted).format('MMMM DD YYYY')} </p>
+              <h5 onClick={() => showDeckList(deck._id)}>{deck.deckName}</h5>
+              <p>
+                {deck.format === 'Commander'? 
+                  <>Commander: {deck.commander ? deck.commander.cardName : '----'}</>
+                  :
+                  <>Format: {deck.format}</>
+                }
+                || DateCreated: {moment(deck.dateStarted).format('MMMM DD YYYY')} 
+              </p>
             </div>
           )}
           
