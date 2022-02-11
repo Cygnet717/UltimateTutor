@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
-import { Button } from 'react-bootstrap'
+import { Accordion, Button } from 'react-bootstrap'
 import { AuthContext } from '../../context/AuthContext';
 import { getUserDecks } from '../../utils/deckApi';
 import { getAllUser, makeFriend, dropFriend } from '../../utils/api';
@@ -38,7 +38,6 @@ export default function Friends() {
   }
 
   const handleSelectedFriend = async (friendId, friendName) => {
-    //add class to highlight friend and remove from other friends
     const response = await getUserDecks(friendId)
     const result = await response.json()
     setFriendDecks({
@@ -50,10 +49,6 @@ export default function Friends() {
 
   const handleUnfriend = () => {
     setShowUnfriendModal(true)
-  }
-
-  const showDeckList = (deck_id) => {
-    window.location.assign(`/deckList/${deck_id}`)
   }
 
   useEffect(() => {
@@ -89,23 +84,34 @@ export default function Friends() {
         )}
       
       </div>
+      
       <div id='activityFeed'>
         {friendDecks? 
           <>
           <h3>{friendDecks.username} Decks</h3> 
-          {friendDecks.decks.map(deck => 
-            <div key={deck._id}>
-              <h5 onClick={() => showDeckList(deck._id)}>{deck.deckName}</h5>
-              <p>
-                {deck.format === 'Commander'? 
-                  <>Commander: {deck.commander ? deck.commander.cardName : '----'}</>
-                  :
-                  <>Format: {deck.format}</>
-                }
-                || DateCreated: {moment(deck.dateStarted).format('MMMM DD YYYY')} 
-              </p>
-            </div>
-          )}
+          <Accordion>
+            {friendDecks.decks.map((deck, i) => 
+                  <Accordion.Item  eventKey={i} key={deck._id}>
+                    <Accordion.Header>
+                    <h5>{deck.deckName}</h5>
+                    <div>
+                      {deck.format === 'Commander'? 
+                        <>Commander: {deck.commander ? deck.commander.cardName : '----'}</>
+                        :
+                        <>Format: {deck.format}</>
+                      }
+                      || DateCreated: {moment(deck.dateStarted).format('MMMM DD YYYY')} 
+                    </div>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      {deck.deckCards.map(card => 
+                        <p>{card.cardName}</p>
+                      )}
+                    </Accordion.Body>
+                  </Accordion.Item>
+                )}
+           
+          </Accordion>
           
           <Button variant="danger" onClick={() => handleUnfriend()}>Unfriend</Button>
           </>
@@ -123,6 +129,7 @@ export default function Friends() {
           resetfriends={() => checkForFriends()}
         />
       </div>
+
     </div>
   )
 }
