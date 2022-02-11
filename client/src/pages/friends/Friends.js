@@ -38,6 +38,7 @@ export default function Friends() {
   }
 
   const handleSelectedFriend = async (friendId, friendName) => {
+    //add class to highlight friend and remove from other friends
     const response = await getUserDecks(friendId)
     const result = await response.json()
     setFriendDecks({
@@ -64,7 +65,7 @@ export default function Friends() {
       <div id='friendsList'>
         <h3>Friends</h3>
         {userFriends.friends.map(friend => 
-          <p key={friend._id} onClick={() => handleSelectedFriend(friend._id, friend.username)}>{friend.username}</p>
+          <p key={friend._id} className={friend.username === friendDecks.username ? 'friendButton highlighted' : 'friendButton'} onClick={() => handleSelectedFriend(friend._id, friend.username)}>{friend.username}</p>
 
         )}
         <Button variant="primary" onClick={() => setShowFriendModal(true)}>
