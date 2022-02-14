@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
-import { Button } from 'react-bootstrap'
+import { Accordion, Button } from 'react-bootstrap'
 import { AuthContext } from '../../context/AuthContext';
 import { getUserDecks } from '../../utils/deckApi';
 import { getAllUser, makeFriend, dropFriend } from '../../utils/api';
 import AddFriendModal from '../../components/Modals/AddFriendModal/AddFriendModal'
 import UnfriendModal from '../../components/Modals/RemoveFriendModal/RemoveFriendModal';
 import './Friends.css'
+import FriendDeckList from '../../components/FriendDeckList/FriendDeckList';
 
 export default function Friends() {
   const [ showFriendModal, setShowFriendModal ] = useState(false);
@@ -60,7 +61,7 @@ export default function Friends() {
       <div id='friendsList'>
         <h3>Friends</h3>
         {userFriends.friends.map(friend => 
-          <p key={friend._id} onClick={() => handleSelectedFriend(friend._id, friend.username)}>{friend.username}</p>
+          <p key={friend._id} className={friend.username === friendDecks.username ? 'friendButton highlighted' : 'friendButton'} onClick={() => handleSelectedFriend(friend._id, friend.username)}>{friend.username}</p>
 
         )}
         <Button variant="primary" onClick={() => setShowFriendModal(true)}>
@@ -84,16 +85,32 @@ export default function Friends() {
         )}
       
       </div>
+      
       <div id='activityFeed'>
         {friendDecks? 
           <>
-          <h3>{friendDecks.username} Decks</h3>
-          {friendDecks.decks.map(deck => 
-            <div key={deck._id}>
-              <h5>{deck.deckName}</h5>
-              <p>Format: {deck.format} || DateCreated: {moment(deck.dateStarted).format('MMMM DD YYYY')} </p>
-            </div>
-          )}
+          <h3>{friendDecks.username} Decks</h3> 
+          <Accordion>
+            {friendDecks.decks.map((deck, i) => 
+                  <Accordion.Item  eventKey={i} key={deck._id}>
+                    <Accordion.Header>
+                    <h5>{deck.deckName}</h5>
+                    <div>
+                      {deck.format === 'Commander'? 
+                        <>Commander: {deck.commander ? deck.commander.cardName : '----'}</>
+                        :
+                        <>Format: {deck.format}</>
+                      }
+                      || DateCreated: {moment(deck.dateStarted).format('MMMM DD YYYY')} 
+                    </div>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <FriendDeckList deck={deck}></FriendDeckList>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                )}
+           
+          </Accordion>
           
           <Button variant="danger" onClick={() => handleUnfriend()}>Unfriend</Button>
           </>
@@ -111,6 +128,7 @@ export default function Friends() {
           resetfriends={() => checkForFriends()}
         />
       </div>
+
     </div>
   )
 }

@@ -48,7 +48,6 @@ export default function DeskFeed() {
   }
 
   const showDeckList = (id) => {
-    console.log(id)
     window.location.assign(`/deckList/${id}`)
   }
 
@@ -56,7 +55,7 @@ export default function DeskFeed() {
     <div className="deskFeed">
       {userDecks.map(deck => {
         let date = new Date(deck.dateStarted).toLocaleDateString()
-        let commander = deck.deckCards.find(card => card.commander )
+        let commander = deck.commander? deck.commander : false
         return(
           <Container className='singleDeck' key={uuid()}>
             <Col>

@@ -12,3 +12,13 @@
   outline: 1px solid purple;
   width: 70%;
 }
+
+.friendButton {
+  border: 2px solid grey;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.highlighted {
+  border: 2px solid red
+}
