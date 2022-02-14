@@ -7,6 +7,7 @@ import { getAllUser, makeFriend, dropFriend } from '../../utils/api';
 import AddFriendModal from '../../components/Modals/AddFriendModal/AddFriendModal'
 import UnfriendModal from '../../components/Modals/RemoveFriendModal/RemoveFriendModal';
 import './Friends.css'
+import FriendDeckList from '../../components/FriendDeckList/FriendDeckList';
 
 export default function Friends() {
   const [ showFriendModal, setShowFriendModal ] = useState(false);
@@ -104,9 +105,7 @@ export default function Friends() {
                     </div>
                     </Accordion.Header>
                     <Accordion.Body>
-                      {deck.deckCards.map(card => 
-                        <p>{card.cardName}</p>
-                      )}
+                      <FriendDeckList deck={deck}></FriendDeckList>
                     </Accordion.Body>
                   </Accordion.Item>
                 )}

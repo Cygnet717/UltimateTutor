@@ -3,7 +3,7 @@ import {useState, useEffect, useContext} from 'react'
 import {AuthContext} from "../../context/AuthContext"
 import {useParams} from 'react-router-dom';
 import cardImage from '../../images/Magic_card_back.jpg'
-import { toggleCommander, removeCard } from '../../utils/deckApi';
+import { toggleCommander, removeCard, sortCardTypes } from '../../utils/deckApi';
 import { v4 as uuidv4 } from 'uuid';
 import './DeckFeed.css';
 
@@ -19,55 +19,15 @@ export default function DeckFeed() {
   const getDetails = async(deck_id) => {
     const currentDeck = userDecks.find(deck => deck._id === deck_id)
     
-    sortCardTypes(currentDeck)
+    handleSortCards(currentDeck)
   }
 
-  const sortCardTypes = (currentDeck) =>{
-    if(currentDeck){  //['Creature', 'Instant', 'Sorcery', 'Enchantment', 'Land', 'Planeswalker', 'Artifact']
-      let deckCreatures = [];
-      let deckInstants = [];
-      let deckSorceries = [];
-      let deckEnchantments = [];
-      let deckLands = [];
-      let deckPlaneswalkers = [];
-      let deckArtifacts = [];
-
-      for(let i=0; i<currentDeck.deckCards.length; i++){
-        switch(currentDeck.deckCards[i].cardType) {
-          case "Creature":
-            deckCreatures.push(currentDeck.deckCards[i])
-            break;
-          case 'Instant':
-            deckInstants.push(currentDeck.deckCards[i])
-            break;
-          case 'Sorcery':
-            deckSorceries.push(currentDeck.deckCards[i])
-            break;
-          case 'Enchantment':
-            deckEnchantments.push(currentDeck.deckCards[i])
-            break; 
-          case 'Land':
-            deckLands.push(currentDeck.deckCards[i])
-            break;
-          case 'Planeswalker':
-            deckPlaneswalkers.push(currentDeck.deckCards[i])
-            break;
-          case 'Artifact':
-            deckArtifacts.push(currentDeck.deckCards[i])
-            break;
-          default:
-            break;
-        }
-      }
-      setSortedCards([
-        {Creatures: deckCreatures}, 
-        {Instants: deckInstants}, 
-        {Sorceries: deckSorceries},
-        {Enchantments: deckEnchantments},
-        {Lands: deckLands},
-        {Planeswalkers: deckPlaneswalkers},
-        {Artifacts: deckArtifacts}
-      ])
+  const handleSortCards = async(currentDeck) =>{
+    let sortedResult;
+    if(currentDeck){
+      sortedResult = await sortCardTypes(currentDeck)
+    
+      setSortedCards(sortedResult)
       setDeckData(currentDeck)
       if(currentDeck.commander){
         setCommanderCard(currentDeck.commander)
@@ -75,8 +35,9 @@ export default function DeckFeed() {
       }else{
         setDisplayedCard(currentDeck.deckCards[0].image.front)
       }
-      
     }
+      
+    
   }
 
   const handleCommanderSelect = async (event) => {
@@ -102,7 +63,7 @@ export default function DeckFeed() {
     }
     const response = await removeCard(cardData)
     const result = await response.json()
-    await sortCardTypes(result) //update page
+    await handleSortCards(result) //update page
   }
 
   useEffect(() => {

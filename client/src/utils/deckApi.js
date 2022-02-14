@@ -84,4 +84,55 @@ export const toggleCommander = async(cardData) => { //variables needed: "deck_id
     },
   });
   return result;
+};
+
+export const sortCardTypes = async(deck) =>{
+  //['Creature', 'Instant', 'Sorcery', 'Enchantment', 'Land', 'Planeswalker', 'Artifact']
+  let deckCreatures = [];
+  let deckInstants = [];
+  let deckSorceries = [];
+  let deckEnchantments = [];
+  let deckLands = [];
+  let deckPlaneswalkers = [];
+  let deckArtifacts = [];
+
+  for(let i=0; i<deck.deckCards.length; i++){
+    switch(deck.deckCards[i].cardType) {
+      case "Creature":
+        deckCreatures.push(deck.deckCards[i])
+        break;
+      case 'Instant':
+        deckInstants.push(deck.deckCards[i])
+        break;
+      case 'Sorcery':
+        deckSorceries.push(deck.deckCards[i])
+        break;
+      case 'Enchantment':
+        deckEnchantments.push(deck.deckCards[i])
+        break; 
+      case 'Land':
+        deckLands.push(deck.deckCards[i])
+        break;
+      case 'Planeswalker':
+        deckPlaneswalkers.push(deck.deckCards[i])
+        break;
+      case 'Artifact':
+        deckArtifacts.push(deck.deckCards[i])
+        break;
+      default:
+        break;
+    }
+  }
+
+  let sorted = await [
+    {Creatures: deckCreatures}, 
+    {Instants: deckInstants}, 
+    {Sorceries: deckSorceries},
+    {Enchantments: deckEnchantments},
+    {Lands: deckLands},
+    {Planeswalkers: deckPlaneswalkers},
+    {Artifacts: deckArtifacts}
+  ]
+
+  return sorted
 }
