@@ -4,6 +4,7 @@ import { sortCardTypes } from '../../utils/deckApi';
 
 export default function FriendDeckList(props){
   const [ sortedCards, setSortedCards ] = useState()
+  console.log(sortedCards)
 
   const sortDeckCards = async () => {
     console.log('this')
@@ -19,7 +20,7 @@ export default function FriendDeckList(props){
 
   return (
     <>
-     {/* {sortedCards.map(type => {
+     {sortedCards?sortedCards.map(type => {
           if(Object.values(type)[0].length > 0){
             return(
               <div key={uuidv4()}> 
@@ -38,7 +39,10 @@ export default function FriendDeckList(props){
               </div>
             )
           }
-        })} */}
+        })
+      :
+      <></>
+      }
     </>
   )
 }
