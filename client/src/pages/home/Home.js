@@ -12,6 +12,7 @@ export default function Home() {
   const [constructingDeck, setConstructingDeck] = useState({deck_id: ''})
   const {user, userDecks} = useContext(AuthContext)
   const loggedIn = user.data.username ==='default'? false: true
+  console.log(searchFormData)
 
   const handleInputChange = (event) => {
     const {name, value} = event.target;
@@ -60,6 +61,9 @@ export default function Home() {
       if(searchFormData.type){
         query = query.concat(' t%3A' + searchFormData.type)
       }
+      if(searchFormData.text){
+        query = query.concat(` o%3A'${searchFormData.text}'`)
+      }
       response = await scryfallSearch(query);
       cardResults = await response.json();
       setSearchResults(cardResults);
@@ -79,6 +83,11 @@ export default function Home() {
             <option value="creature">Creature</option>
             <option value="sorcery">Sorcery</option>
             <option value="instant">Instant</option>
+            <option value="enchantment">Enchantment</option>
+            <option value="land">Land</option>
+            <option value="planeswalker">Planeswalker</option>
+            <option value="legendary">Legendary</option>
+            
           </Form.Select>
           <FormControl
             placeholder="Card Name"
@@ -114,7 +123,15 @@ export default function Home() {
         </div>
         {advSearch? 
           <>
-            More Search Options
+            <FormControl
+            placeholder="Card Text"
+            className='fitContent'
+            aria-label="card text"
+            aria-describedby="basic-addon1"
+            name="text"
+            onChange={handleInputChange}
+            />
+
           </>
           :
           <></>
@@ -131,7 +148,8 @@ export default function Home() {
       
       
       {searchResults.data?
-        <>{searchResults.data.map(card => 
+        <>
+        {searchResults.data.map(card => 
           <Card 
             cardData = {card} 
             loggedIn = {loggedIn} 
@@ -139,7 +157,8 @@ export default function Home() {
             constructingDeck = {constructingDeck}
             setConstructingDeck = {setConstructingDeck}
             key = {card.id}/>
-        )}</>
+        )}
+        </>
         :
         <>
           Results Area
