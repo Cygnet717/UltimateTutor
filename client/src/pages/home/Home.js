@@ -1,20 +1,28 @@
 import React, {useState, useContext} from 'react';
 import './Home.css';
-import { Form, Button, FormControl } from 'react-bootstrap';
+import { Form, Button, FormControl, InputGroup } from 'react-bootstrap';
 import {AuthContext} from "../../context/AuthContext"
 import Card from '../../components/card/Card'
 import {scryfallSearch, scryfallNamedSearch} from '../../utils/scryfallApiCalls'
 
 export default function Home() {
-  const [advSearch, setAdvSearch] = useState(false)
-  const [searchFormData, setSearchFormData] = useState({color: '%3A'}) //'%3A' Percent-encoding for ':'
-  const [searchResults, setSearchResults] = useState(false)
-  const [constructingDeck, setConstructingDeck] = useState({deck_id: ''})
-  const {user, userDecks} = useContext(AuthContext)
+  const [ advSearch, setAdvSearch ] = useState(false)
+  const [ searchFormData, setSearchFormData ] = useState({color: '%3A'}) //'%3A' Percent-encoding for ':'
+  const [ isValid, setIsValid ] = useState(false)
+  const [ searchResults, setSearchResults ] = useState(false)
+  const [ constructingDeck, setConstructingDeck ] = useState({deck_id: ''})
+  const { user, userDecks } = useContext(AuthContext)
   const loggedIn = user.data.username ==='default'? false: true
+  console.log(searchFormData)
+
+  const numRegex = /^[0-9]*$/
 
   const handleInputChange = (event) => {
     const {name, value} = event.target;
+    if(event.target.name === 'cmc'){
+      const result = numRegex.test(event.target.value)
+      setIsValid(result)
+    }
     setSearchFormData({...searchFormData, [name]: value});
   }
 
@@ -46,6 +54,7 @@ export default function Home() {
     event.preventDefault();
     let response;
     let cardResults;
+
     console.log("thinking")
     //start thinking gif
     if(searchFormData.cardName){
@@ -55,10 +64,16 @@ export default function Home() {
     } else {
       let query = '';
       if(searchFormData.color.length > 3){
-        query = query.concat(" color" + searchFormData.color)
+        query = query.concat(` color${searchFormData.color}`)
       }
       if(searchFormData.type){
-        query = query.concat(' t%3A' + searchFormData.type)
+        query = query.concat(` t%3A${searchFormData.type}`)
+      }
+      if(searchFormData.text){
+        query = query.concat(` o%3A'${searchFormData.text}'`)
+      }
+      if(searchFormData.cmc && isValid){ //looks for exact cmc
+        query = query.concat(` cmc%3D${searchFormData.cmc}`)
       }
       response = await scryfallSearch(query);
       cardResults = await response.json();
@@ -79,6 +94,11 @@ export default function Home() {
             <option value="creature">Creature</option>
             <option value="sorcery">Sorcery</option>
             <option value="instant">Instant</option>
+            <option value="enchantment">Enchantment</option>
+            <option value="land">Land</option>
+            <option value="planeswalker">Planeswalker</option>
+            <option value="legendary">Legendary</option>
+            
           </Form.Select>
           <FormControl
             placeholder="Card Name"
@@ -114,7 +134,26 @@ export default function Home() {
         </div>
         {advSearch? 
           <>
-            More Search Options
+            <InputGroup className="mb-3">
+              <InputGroup.Text>Card Text</InputGroup.Text>
+              <FormControl
+              aria-label="card text"
+              aria-describedby="basic-addon1"
+              name="text"
+              onChange={handleInputChange}
+              />
+            </InputGroup>
+            
+            <InputGroup className="mb-3">
+              <InputGroup.Text>CMC</InputGroup.Text>
+              <FormControl 
+              aria-label="converted mana cost"
+              aria-describedby="basic-addon1"
+              name="cmc"
+              style={isValid? {} : {border: '2px solid red', borderRadius: '3px'}}
+              onChange={handleInputChange}
+              />
+            </InputGroup>
           </>
           :
           <></>
@@ -131,7 +170,8 @@ export default function Home() {
       
       
       {searchResults.data?
-        <>{searchResults.data.map(card => 
+        <>
+        {searchResults.data.map(card => 
           <Card 
             cardData = {card} 
             loggedIn = {loggedIn} 
@@ -139,7 +179,8 @@ export default function Home() {
             constructingDeck = {constructingDeck}
             setConstructingDeck = {setConstructingDeck}
             key = {card.id}/>
-        )}</>
+        )}
+        </>
         :
         <>
           Results Area
