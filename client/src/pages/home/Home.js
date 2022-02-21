@@ -8,12 +8,11 @@ import {scryfallSearch, scryfallNamedSearch} from '../../utils/scryfallApiCalls'
 export default function Home() {
   const [ advSearch, setAdvSearch ] = useState(false)
   const [ searchFormData, setSearchFormData ] = useState({color: '%3A'}) //'%3A' Percent-encoding for ':'
-  const [ isValid, setIsValid ] = useState(false)
+  const [ isValid, setIsValid ] = useState(true)
   const [ searchResults, setSearchResults ] = useState(false)
   const [ constructingDeck, setConstructingDeck ] = useState({deck_id: ''})
   const { user, userDecks } = useContext(AuthContext)
   const loggedIn = user.data.username ==='default'? false: true
-  console.log(searchFormData)
 
   const numRegex = /^[0-9]*$/
 
@@ -73,7 +72,7 @@ export default function Home() {
         query = query.concat(` o%3A'${searchFormData.text}'`)
       }
       if(searchFormData.cmc && isValid){ //looks for exact cmc
-        query = query.concat(` cmc%3D${searchFormData.cmc}`)
+        query = query.concat(` cmc${searchFormData.cmcop}${searchFormData.cmc}`)
       }
       response = await scryfallSearch(query);
       cardResults = await response.json();
@@ -146,6 +145,34 @@ export default function Home() {
             
             <InputGroup className="mb-3">
               <InputGroup.Text>CMC</InputGroup.Text>
+              <Form.Check
+                inline
+                label=">"
+                name="cmcop"
+                value='%3E'
+                type='radio'
+                id={`inline-radio-1`}
+                onChange={handleInputChange}
+              />
+              <Form.Check
+                inline
+                label="="
+                value='%3D'
+                name="cmcop"
+                selected
+                type='radio'
+                id={`inline-radio-2`}
+                onChange={handleInputChange}
+              />
+              <Form.Check
+                inline  
+                label="<"
+                value='%3C'
+                name="cmcop"
+                type='radio'
+                id={`inline-radio-3`}
+                onChange={handleInputChange}
+              />
               <FormControl 
               aria-label="converted mana cost"
               aria-describedby="basic-addon1"
