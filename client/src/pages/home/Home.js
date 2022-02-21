@@ -88,7 +88,7 @@ export default function Home() {
     <div>
       <Form className='searchForm' onSubmit={handleSearchSubmit}>
         <div className='searchSection'>
-          <Form.Select aria-label="select card type" className='fitContent' name="type" onChange={handleInputChange}>
+          <Form.Select aria-label="select card type" className='fitContent pointer' name="type" onChange={handleInputChange}>
             <option value=''>Card Type</option>
             <option value="creature">Creature</option>
             <option value="sorcery">Sorcery</option>
@@ -109,25 +109,25 @@ export default function Home() {
           />
         </div>
         <div className='searchSection'>
-          <div className='color white'>
+          <div className='color white pointer'>
             <Form.Check type="checkbox" id="custom-checkbox" label="White" name='color' value="w" onChange={handleColorChange}/>
           </div>
-          <div className='color blue'>
+          <div className='color blue pointer'>
             <Form.Check type="checkbox" id="custom-checkbox" label="Blue" name='color' value="u" onChange={handleColorChange}/> 
           </div>
-          <div className='color black'>
+          <div className='color black pointer'>
             <Form.Check type="checkbox" id="custom-checkbox" label="Black" name='color' value="b" onChange={handleColorChange}/> 
           </div>
-          <div className='color red'>
+          <div className='color red pointer'>
             <Form.Check type="checkbox" id="custom-checkbox" label="Red" name='color' value="r" onChange={handleColorChange}/> 
           </div>
-          <div className='color green'>
+          <div className='color green pointer'>
             <Form.Check type="checkbox" id="custom-checkbox" label="Green" name='color' value="g" onChange={handleColorChange}/>
           </div>
-          <div className='color colorless'>
+          <div className='color colorless pointer'>
             <Form.Check type="checkbox" id="custom-checkbox" label="Colorless" value="c" name='color' onChange={handleColorChange}/> 
           </div>
-          <div className='color multicolor'>
+          <div className='color multicolor pointer'>
             <Form.Check type="checkbox" id="custom-checkbox" label="Multicolor" value="m" name='color' onChange={handleColorChange}/> 
           </div>
         </div>

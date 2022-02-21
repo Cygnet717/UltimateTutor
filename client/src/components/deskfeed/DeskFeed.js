@@ -60,7 +60,7 @@ export default function DeskFeed() {
           <Container className='singleDeck' key={uuid()}>
             <Col>
               <Container >
-                  <Col onClick={() => showDeckList(deck._id)} className='border'>{deck.deckName}</Col>
+                  <Col onClick={() => showDeckList(deck._id)} className='border pointer'>{deck.deckName}</Col>
                   <Col>Card Count: {deck.deckCards.length}</Col>
                   <Col>Side Board: {deck.sideBoard.length}</Col>
                   {/* <Col>Version: {deck.versionToBe -1} <button>Save Version</button></Col> --simplify MVP*/}
@@ -93,7 +93,7 @@ export default function DeskFeed() {
               </Col>
               <Col>
                 <Form.Group className="mb-3">
-                  <Form.Select id="Format" name="format" onChange={handleInputChange} value={newDeckData.format}>
+                  <Form.Select id="Format" name="format" className='pointer' onChange={handleInputChange} value={newDeckData.format}>
                     <option>Select Format</option>
                     <option value='Standard'>Standard</option>
                     <option value='Commander'>Commander</option>
