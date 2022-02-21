@@ -39,6 +39,7 @@ export default function FriendDeckList(props){
               </div>
             )
           }
+          return
         })
       :
       <></>
