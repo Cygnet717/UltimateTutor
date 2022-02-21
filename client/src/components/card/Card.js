@@ -86,6 +86,7 @@ export default function Card(props) {
     setUserDecks(result)
     setShowConf(true)
     setTime()
+    return updatedDeck
   }
 
   const handleSideboardCheck = () => {

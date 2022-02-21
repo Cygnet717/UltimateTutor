@@ -32,9 +32,11 @@ export default function Friends() {
     if(classString.includes('plus')){
       const response = await makeFriend(friendData)
       checkForFriends()
+      return response
     } else if (classString.includes('minus')){
       const response = await dropFriend(friendData)
       checkForFriends()
+      return response
     }
   }
 

@@ -25,7 +25,8 @@ export default function DeskFeed() {
       }
       const newDeck = await response.json()
       setNewDeckData({user_id: user.data._id, deckName: '', format: ''})
-    checkForDecks()
+      checkForDecks()
+      return newDeck
     } catch (err){
       console.error(err)
     }
@@ -41,7 +42,7 @@ export default function DeskFeed() {
       }
       const deleted = await response.json()
       checkForDecks()
-
+      return deleted
     }catch(err){
       console.error(err)
     }

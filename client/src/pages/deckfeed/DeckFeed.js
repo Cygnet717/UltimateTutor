@@ -52,7 +52,7 @@ export default function DeckFeed() {
     }
    
     const res = await toggleCommander(commanderData)
-    
+    return res
   }
 
   const handleRemoveCard = async (e) => {
@@ -68,7 +68,7 @@ export default function DeckFeed() {
 
   useEffect(() => {
     getDetails(deck_id)
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userDecks])
   return (
     <div id='deckListContainer'>
@@ -121,8 +121,8 @@ export default function DeckFeed() {
         <img id='displayedCard' src={displayedCard} alt='current card' />
       </div>
       <div className='rightSideDeck'>
-        {sortedCards.map(type => {
-          if(Object.values(type)[0].length > 0){
+        {sortedCards.filter(type => Object.values(type)[0].length > 0)
+          .map(type => {
             return(
               <div key={uuidv4()}> 
                 <h4> {Object.keys(type)[0]} ({Object.values(type)[0].length})</h4>
@@ -145,7 +145,6 @@ export default function DeckFeed() {
                 </ul>
               </div>
             )
-          }
         })}
         <div>
           <h4>Sideboard</h4>

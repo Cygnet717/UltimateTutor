@@ -1,5 +1,4 @@
-import React, { useState, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { createUser } from "../../utils/api";
 import Auth from "../../utils/auth";

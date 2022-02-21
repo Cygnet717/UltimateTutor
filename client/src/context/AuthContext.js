@@ -11,17 +11,17 @@ const AuthProvider = ({children}) => {
   const [userDecks, setUserDecks] = useState([]);
   const [userFriends, setUserFriends] = useState({friends: [], pendingFriends: []});
 
-  const checkForAuthUser = async () => {
-      let loggedInUser = Auth.loggedIn()
+  // const checkForAuthUser = async () => {
+  //     let loggedInUser = Auth.loggedIn()
 
-      if(!loggedInUser){
-        loggedInUser = {data: {username: 'default'}};
-      } else {
-        loggedInUser = Auth.getProfile()
-      }
+  //     if(!loggedInUser){
+  //       loggedInUser = {data: {username: 'default'}};
+  //     } else {
+  //       loggedInUser = Auth.getProfile()
+  //     }
 
-    setuser(loggedInUser)
-  }
+  //   setuser(loggedInUser)
+  // }
 
   const checkForDecks = async () => {
     let decks = []
@@ -49,11 +49,21 @@ const AuthProvider = ({children}) => {
   }
 
   useEffect( () => {
-    checkForAuthUser()
+    let loggedInUser = Auth.loggedIn()
+
+    if(!loggedInUser){
+      loggedInUser = {data: {username: 'default'}};
+    } else {
+      loggedInUser = Auth.getProfile()
+    }
+
+    setuser(loggedInUser)
   }, [])
+
   useEffect(() => {
     checkForDecks()
     checkForFriends()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   return (

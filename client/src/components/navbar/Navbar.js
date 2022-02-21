@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { Button, Navbar, Container, NavDropdown, Nav } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import Auth from "../../utils/auth";
 import { AuthContext } from "../../context/AuthContext";
 import "./Navbar.css";
@@ -10,7 +9,7 @@ export default function Navtabs() {
   const { user } = useContext(AuthContext);
 
   const pathname = window.location.pathname
-  const accountInfo = document.getElementById("account-info");
+  // const accountInfo = document.getElementById("account-info");
 
   const handleLogout = () => {
     Auth.logout();

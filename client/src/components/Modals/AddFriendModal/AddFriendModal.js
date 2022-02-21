@@ -11,7 +11,6 @@ export default function AddFriendModal(props) {
     const currFriend = props.currFriends.find(user => user.username === e.target.value)
     const found = props.allusers.find(user => user.username === e.target.value)
     if(currFriend){
-      console.log('already friends')
       setFeedback('You are already friends!')
       setIsValid(true)
     } else if(found){
@@ -32,6 +31,7 @@ export default function AddFriendModal(props) {
     }
     const response = await makeFriend(friendshipData)
     const result = await response.json()
+    return result
   }
 
   return (
