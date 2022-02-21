@@ -61,7 +61,11 @@ export default function Friends() {
       <div id='friendsList'>
         <h3>Friends</h3>
         {userFriends.friends.map(friend => 
-          <p key={friend._id} className={friend.username === friendDecks.username ? 'friendButton highlighted' : 'friendButton'} onClick={() => handleSelectedFriend(friend._id, friend.username)}>{friend.username}</p>
+          <p 
+          key={friend._id} 
+          className={friend.username === friendDecks.username ? 'friendButton highlighted' : 'friendButton pointer'} 
+          onClick={() => handleSelectedFriend(friend._id, friend.username)}
+          >{friend.username}</p>
 
         )}
         <Button variant="primary" onClick={() => setShowFriendModal(true)}>
@@ -78,12 +82,12 @@ export default function Friends() {
         
         <h3>Pending Friends</h3>
         {userFriends.pendingFriends.map(penFren => 
-          <p key={penFren._id}>{penFren.username}
-            <i className="far fa-plus-square" onClick={(e) => handleFriendResponse(e, penFren._id)}></i>
-            <i className="far fa-minus-square" onClick={(e) => handleFriendResponse(e, penFren._id)}></i>
+          <p className='friendButton flexStyle' key={penFren._id}>
+            <i className="far fa-plus-square fa-lg pointer" onClick={(e) => handleFriendResponse(e, penFren._id)}></i>
+            {penFren.username}
+            <i className="far fa-minus-square fa-lg pointer" onClick={(e) => handleFriendResponse(e, penFren._id)}></i>
           </p>
         )}
-      
       </div>
       
       <div id='activityFeed'>

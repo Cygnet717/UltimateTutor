@@ -8,12 +8,11 @@ import {scryfallSearch, scryfallNamedSearch} from '../../utils/scryfallApiCalls'
 export default function Home() {
   const [ advSearch, setAdvSearch ] = useState(false)
   const [ searchFormData, setSearchFormData ] = useState({color: '%3A'}) //'%3A' Percent-encoding for ':'
-  const [ isValid, setIsValid ] = useState(false)
+  const [ isValid, setIsValid ] = useState(true)
   const [ searchResults, setSearchResults ] = useState(false)
   const [ constructingDeck, setConstructingDeck ] = useState({deck_id: ''})
   const { user, userDecks } = useContext(AuthContext)
   const loggedIn = user.data.username ==='default'? false: true
-  console.log(searchFormData)
 
   const numRegex = /^[0-9]*$/
 
@@ -73,7 +72,7 @@ export default function Home() {
         query = query.concat(` o%3A'${searchFormData.text}'`)
       }
       if(searchFormData.cmc && isValid){ //looks for exact cmc
-        query = query.concat(` cmc%3D${searchFormData.cmc}`)
+        query = query.concat(` cmc${searchFormData.cmcop}${searchFormData.cmc}`)
       }
       response = await scryfallSearch(query);
       cardResults = await response.json();
@@ -89,7 +88,7 @@ export default function Home() {
     <div>
       <Form className='searchForm' onSubmit={handleSearchSubmit}>
         <div className='searchSection'>
-          <Form.Select aria-label="select card type" className='fitContent' name="type" onChange={handleInputChange}>
+          <Form.Select aria-label="select card type" className='fitContent pointer' name="type" onChange={handleInputChange}>
             <option value=''>Card Type</option>
             <option value="creature">Creature</option>
             <option value="sorcery">Sorcery</option>
@@ -110,25 +109,25 @@ export default function Home() {
           />
         </div>
         <div className='searchSection'>
-          <div className='color white'>
+          <div className='color white pointer'>
             <Form.Check type="checkbox" id="custom-checkbox" label="White" name='color' value="w" onChange={handleColorChange}/>
           </div>
-          <div className='color blue'>
+          <div className='color blue pointer'>
             <Form.Check type="checkbox" id="custom-checkbox" label="Blue" name='color' value="u" onChange={handleColorChange}/> 
           </div>
-          <div className='color black'>
+          <div className='color black pointer'>
             <Form.Check type="checkbox" id="custom-checkbox" label="Black" name='color' value="b" onChange={handleColorChange}/> 
           </div>
-          <div className='color red'>
+          <div className='color red pointer'>
             <Form.Check type="checkbox" id="custom-checkbox" label="Red" name='color' value="r" onChange={handleColorChange}/> 
           </div>
-          <div className='color green'>
+          <div className='color green pointer'>
             <Form.Check type="checkbox" id="custom-checkbox" label="Green" name='color' value="g" onChange={handleColorChange}/>
           </div>
-          <div className='color colorless'>
+          <div className='color colorless pointer'>
             <Form.Check type="checkbox" id="custom-checkbox" label="Colorless" value="c" name='color' onChange={handleColorChange}/> 
           </div>
-          <div className='color multicolor'>
+          <div className='color multicolor pointer'>
             <Form.Check type="checkbox" id="custom-checkbox" label="Multicolor" value="m" name='color' onChange={handleColorChange}/> 
           </div>
         </div>
@@ -146,6 +145,34 @@ export default function Home() {
             
             <InputGroup className="mb-3">
               <InputGroup.Text>CMC</InputGroup.Text>
+              <Form.Check
+                inline
+                label=">"
+                name="cmcop"
+                value='%3E'
+                type='radio'
+                id={`inline-radio-1`}
+                onChange={handleInputChange}
+              />
+              <Form.Check
+                inline
+                label="="
+                value='%3D'
+                name="cmcop"
+                selected
+                type='radio'
+                id={`inline-radio-2`}
+                onChange={handleInputChange}
+              />
+              <Form.Check
+                inline  
+                label="<"
+                value='%3C'
+                name="cmcop"
+                type='radio'
+                id={`inline-radio-3`}
+                onChange={handleInputChange}
+              />
               <FormControl 
               aria-label="converted mana cost"
               aria-describedby="basic-addon1"
