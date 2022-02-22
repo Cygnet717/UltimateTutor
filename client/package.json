@@ -1,6 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
+  "homepage": "https://ultimate-tutor-c8nim365r-kathybradt717.vercel.app/",
   "private": true,
   "proxy": "http://localhost:3001",
   "dependencies": {
