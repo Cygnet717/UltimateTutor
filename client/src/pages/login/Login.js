@@ -24,6 +24,7 @@ export default function Login() {
       const response = await loginUser(userFormData);
 
       if (!response.ok) {
+        console.log(response)
         throw new Error("something went wrong!");
       }
 
