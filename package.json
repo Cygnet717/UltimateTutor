@@ -2,6 +2,7 @@
   "name": "ultimatetutor",
   "version": "1.0.0",
   "description": "",
+  "proxy": "https://ultimate-tutor-kathybradt717.vercel.app",
   "main": "server/server.js",
   "scripts": {
     "start": "npx nodemon server/server.js",
